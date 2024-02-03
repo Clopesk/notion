@@ -44,11 +44,11 @@ body{
 
     var greet;
 
-    if (hrs < 12)
+    if (hrs >= 5 && hrs <= 13)
         greet = 'Bom Dia  ';
-    else if (hrs >= 12 && hrs <= 20)
+    else if (hrs > 13 && hrs <= 21)
         greet = 'Boa Tarde ';
-    else if (hrs >= 20 && hrs <= 24)
+    else if (hrs > 21 && hrs < 5)
         greet = 'Boa Noite  ';
 
     document.getElementById('lbl').innerHTML =
