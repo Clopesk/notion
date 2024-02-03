@@ -38,13 +38,14 @@ body{
 
     
     var today = new Date();
-    var hrs = today.getHours();
+   // var hrs = today.getHours();
+    var hrs = 5;
     var dayOfWeek = weekday[today.getDay()];
     var date = dayOfWeek+" " + today.getDate() + "/" +(today.getMonth()+1) +'/'+today.getFullYear()  ;
 
     var greet;
 
-    if (hrs >= 5 && hrs <= 13){
+    if (hrs >= 13 && hrs <= 13){
         greet = 'Bom Dia  ';
     } else if (hrs >= 13 && hrs <= 21){
         greet = 'Boa Tarde ';
