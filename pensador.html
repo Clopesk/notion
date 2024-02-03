@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('sua-imagem-de-fundo.jpg'); /* Substitua pelo caminho da sua imagem de fundo */
+      background-size: cover;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    #thoughtBox {
+      padding: 20px;
+      border: 2px solid white;
+      border-radius: 10px;
+      width: 300px; /* Substitua pelo valor desejado em pixels */
+      height: 150px; /* Substitua pelo valor desejado em pixels */
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="thoughtBox"></div>
+
+  <script>
+    const thoughts = [
+      "Pensamento 1.",
+      "Pensamento 2.",
+      "Pensamento 3.",
+      // Adicione os demais pensamentos aqui
+    ];
+
+    function getRandomThought() {
+      return thoughts[Math.floor(Math.random() * thoughts.length)];
+    }
+
+    function updateThought() {
+      const thoughtBox = document.getElementById('thoughtBox');
+      thoughtBox.innerHTML = getRandomThought();
+    }
+
+    function updateThoughtRandomly() {
+      updateThought();
+      setInterval(updateThought, 300000); // 5 minutos em milissegundos
+    }
+
+    window.onload = updateThoughtRandomly;
+  </script>
+</body>
+</html>
