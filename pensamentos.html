@@ -1,23 +1,26 @@
 <html>
-<head></head>  
+<head>
+  <style>
+    .container {
+      position: relative;
+    }
+
+    #image {
+      position: absolute;
+    }
+
+    #texto {
+      position: absolute;
+      font-size: 32px;
+      left: 50px;
+      top: 100px;
+    }
+  </style>
+</head>  
 <body>
-  #container {
-  position: relative;
-}
-
-#image {
-  position: absolute;
-}
-
-#texto {
-  position: absolute;
-  font-size: 32px;
-  left: 50px;
-  top: 100px;
-}
-<div class="container">
-  <img id="image" src="https://i.stack.imgur.com/yVoVU.png">
-  <label id="texto">TESTE</label>
-</div>
-  </body>
+  <div class="container">
+    <img id="image" src="https://i.stack.imgur.com/yVoVU.png">
+    <label id="texto">TESTE</label>
+  </div>
+</body>
 </html>
