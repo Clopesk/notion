@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slider Horizontal</title>
+<style>
+    body {
+        background-color: #333; /* Cor de fundo para dark mode */
+        margin: 0;
+        padding: 0;
+    }
+    
+    .slider-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .slider {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .slide {
+        flex: 0 0 100%;
+    }
+    
+    img {
+        width: 100%;
+        height: auto;
+    }
+    
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff; /* Cor dos botões para dark mode */
+        font-size: 24px;
+        background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo dos botões para dark mode */
+        padding: 10px;
+        border: none;
+        z-index: 1;
+    }
+    
+    .prev {
+        left: 0;
+    }
+    
+    .next {
+        right: 0;
+    }
+</style>
+</head>
+<body>
 
+<div class="slider-container">
+    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <div class="slider">
+        <div class="slide"><img src="foto1.png"></div>
+        <div class="slide"><img src="foto2.png"></div>
+        <div class="slide"><img src="foto3.png"></div>
+        <div class="slide"><img src="foto4.png"></div>
+        <div class="slide"><img src="foto5.png" ></div>
+    </div>
+    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+</div>
+
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function moveSlide(n) {
+        slideIndex = (slideIndex + n + totalSlides) % totalSlides;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+    }
+
+    setInterval(() => {
+        moveSlide(1);
+    }, 5000);
+</script>
+
+</body>
+</html>
