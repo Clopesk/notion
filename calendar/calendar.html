@@ -9,14 +9,22 @@
     background-color: #1a1a1a;
     color: #fff;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
   }
   .calendar {
-    width: 300px;
+    width: 320px;
     background-color: #333;
-    padding: 20px;
     border-radius: 10px;
     text-align: center;
-    margin: 20px auto;
+  }
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
   }
   .month {
     font-size: 20px;
@@ -27,11 +35,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding: 0 10px;
   }
   .day {
     width: calc(100% / 7);
     padding: 10px 0;
     border-bottom: 1px solid #555;
+    font-size: 14px;
   }
   .today {
     background-color: #444;
@@ -41,19 +51,31 @@
     background-color: #555;
     color: #fff;
     border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 50%;
     cursor: pointer;
     margin-top: 10px;
+    font-size: 16px;
   }
 </style>
 </head>
 <body>
 
 <div class="calendar">
-  <button id="prevMonth" class="arrow">&larr;</button>
-  <div id="currentMonth" class="month"></div>
-  <button id="nextMonth" class="arrow">&rarr;</button>
+  <div class="controls">
+    <button id="prevMonth" class="arrow">&larr;</button>
+    <div id="currentMonth" class="month"></div>
+    <button id="nextMonth" class="arrow">&rarr;</button>
+  </div>
+  <div class="weekdays">
+    <div class="day">Dom</div>
+    <div class="day">Seg</div>
+    <div class="day">Ter</div>
+    <div class="day">Qua</div>
+    <div class="day">Qui</div>
+    <div class="day">Sex</div>
+    <div class="day">Sáb</div>
+  </div>
   <div class="days"></div>
 </div>
 
@@ -123,5 +145,6 @@
 
 </body>
 </html>
+
 
 
