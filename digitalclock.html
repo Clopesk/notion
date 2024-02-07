@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relógio Digital</title>
+<style>
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.clock {
+    font-size: 3em;
+    margin-top: 20px;
+}
+
+.day {
+    font-size: 1.5em;
+}
+
+</style>
+</head>
+<body>
+<div class="clock" id="clock"></div>
+<div class="day" id="day"></div>
+
+<script>
+function updateClock() {
+    var now = new Date();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var seconds = now.getSeconds();
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    var timeString = hours + ':' + minutes + ':' + seconds;
+    var dayString = getDayOfWeekString(now.getDay());
+
+    document.getElementById('clock').textContent = timeString;
+    document.getElementById('day').textContent = dayString;
+}
+
+function getDayOfWeekString(dayIndex) {
+    var daysOfWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    return daysOfWeek[dayIndex];
+}
+
+// Define o fuso horário
+var timeZoneOffset = 0; // Horário de Portugal (GMT)
+
+function adjustTime() {
+    var now = new Date();
+    var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    var newTime = new Date(utc + (3600000 * timeZoneOffset));
+    return newTime;
+}
+
+function startClock() {
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+startClock();
+</script>
+</body>
+</html>
 
