@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendário</title>
+<style>
+  body {
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  .calendar {
+    width: 300px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px auto;
+  }
+  .month {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .day {
+    width: calc(100% / 7);
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+  }
+  .today {
+    background-color: #444;
+    border-radius: 50%;
+  }
+  button {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="calendar">
+  <div class="controls">
+    <button id="prevMonth">Anterior</button>
+    <button id="today">Hoje</button>
+    <button id="nextMonth">Próximo</button>
+  </div>
+  <div id="currentMonth" class="month"></div>
+  <div class="days"></div>
+</div>
+
+<script>
+  const months = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril',
+    'Maio', 'Junho', 'Julho', 'Agosto',
+    'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ];
+
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+
+  const monthElement = document.getElementById('currentMonth');
+  const daysElement = document.querySelector('.days');
+  const prevMonthButton = document.getElementById('prevMonth');
+  const nextMonthButton = document.getElementById('nextMonth');
+  const todayButton = document.getElementById('today');
+
+  function updateCalendar() {
+    monthElement.textContent = months[currentMonth] + ' ' + currentYear;
+
+    daysElement.innerHTML = '';
+
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      const emptyDay = document.createElement('div');
+      emptyDay.classList.add('day');
+      daysElement.appendChild(emptyDay);
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      const day = document.createElement('div');
+      day.textContent = i;
+      day.classList.add('day');
+      if (i === currentDate.getDate() && currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
+        day.classList.add('today');
+      }
+      daysElement.appendChild(day);
+    }
+  }
+
+  prevMonthButton.addEventListener('click', () => {
+    if (currentMonth === 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else {
+      currentMonth--;
+    }
+    updateCalendar();
+  });
+
+  nextMonthButton.addEventListener('click', () => {
+    if (currentMonth === 11) {
+      currentMonth = 0;
+      currentYear++;
+    } else {
+      currentMonth++;
+    }
+    updateCalendar();
+  });
+
+  todayButton.addEventListener('click', () => {
+    currentDate = new Date();
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getFullYear();
+    updateCalendar();
+  });
+
+  updateCalendar();
+</script>
+
+</body>
+</html>
 
