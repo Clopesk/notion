@@ -37,7 +37,7 @@
     background-color: #444;
     border-radius: 50%;
   }
-  button {
+  .arrow {
     background-color: #555;
     color: #fff;
     border: none;
@@ -51,12 +51,9 @@
 <body>
 
 <div class="calendar">
-  <div class="controls">
-    <button id="prevMonth">Anterior</button>
-    <button id="today">Hoje</button>
-    <button id="nextMonth">Próximo</button>
-  </div>
+  <button id="prevMonth" class="arrow">&larr;</button>
   <div id="currentMonth" class="month"></div>
+  <button id="nextMonth" class="arrow">&rarr;</button>
   <div class="days"></div>
 </div>
 
@@ -75,7 +72,6 @@
   const daysElement = document.querySelector('.days');
   const prevMonthButton = document.getElementById('prevMonth');
   const nextMonthButton = document.getElementById('nextMonth');
-  const todayButton = document.getElementById('today');
 
   function updateCalendar() {
     monthElement.textContent = months[currentMonth] + ' ' + currentYear;
@@ -122,16 +118,10 @@
     updateCalendar();
   });
 
-  todayButton.addEventListener('click', () => {
-    currentDate = new Date();
-    currentMonth = currentDate.getMonth();
-    currentYear = currentDate.getFullYear();
-    updateCalendar();
-  });
-
   updateCalendar();
 </script>
 
 </body>
 </html>
+
 
