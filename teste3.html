@@ -1,11 +1,113 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><script defer="" data-domain="blocs.me" src="https://plausible.io/js/script.tagged-events.js"></script><script>
-              (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:3797364,hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;-family:'Karla';font-style:normal;font-weight:400;font-display:swap;}@font-face{src:url('/fonts/Karla-Italic.ttf') format(truetype);font-family:'Karla';font-style:italic;font-weight:400;font-display:swap;}@font-face{src:url('/fonts/Karla-Light.ttf') format(truetype);font-family:'Karla';font-style:normal;font-weight:200;font-display:swap;}@font-face{src:url('/fonts/Karla-Bold.ttf') format(truetype);font-family:'Karla';font-style:normal;font-weight:700;font-display:swap;}html{font-size:20px;background:#fff;}body{font-family:'Karla','Helvetica Neue',Helvetica,sans-serif;font-weight:400;font-kerning:normal;}p{margin-bottom:1rem;line-height:1.75;}h1,h2,h3,h4,h5{margin:3rem 0 1.38rem;font-family:'Karla',sans-serif;font-weight:400;line-height:1.3;}h1{margin-top:0;font-size:2.488rem;}h2{font-size:2.074rem;}h3{font-size:1.728rem;}h4{font-size:1.44rem;}h5{font-size:1.2rem;}small,.text_small{font-size:0.579rem;}@-webkit-keyframes slideIn{0%{opacity:0;-webkit-transform:translate3d(0, 10px, 0);-moz-transform:translate3d(0, 10px, 0);-ms-transform:translate3d(0, 10px, 0);transform:translate3d(0, 10px, 0);}100%{opacity:1;-webkit-transform:translate3d(0, 0, 0);-moz-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}}@keyframes slideIn{0%{opacity:0;-webkit-transform:translate3d(0, 10px, 0);-moz-transform:translate3d(0, 10px, 0);-ms-transform:translate3d(0, 10px, 0);transform:translate3d(0, 10px, 0);}100%{opacity:1;-webkit-transform:translate3d(0, 0, 0);-moz-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}}@-webkit-keyframes slideOut{0%{opacity:1;-webkit-transform:translate3d(0, 0, 0);-moz-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}100%{opacity:0;-webkit-transform:translate3d(0, 10px, 0);-moz-transform:translate3d(0, 10px, 0);-ms-transform:translate3d(0, 10px, 0);transform:translate3d(0, 10px, 0);}}@keyframes slideOut{0%{opacity:1;-webkit-transform:translate3d(0, 0, 0);-moz-transform:translate3d(0, 0, 0);-ms-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);}100%{opacity:0;-webkit-transform:translate3d(0, 10px, 0);-moz-transform:translate3d(0, 10px, 0);-ms-transform:translate3d(0, 10px, 0);transform:translate3d(0, 10px, 0);}}*{-webkit-transition:color ease 0.2s,background ease 0.2s;transition:color ease 0.2s,background ease 0.2s;}button{-webkit-transition:-webkit-transform ease 0.2s;transition:transform ease 0.2s;}@media (prefers-color-scheme: dark){[data-theme='notion-bg']{background:rgb(25, 25, 25);}}@media (prefers-color-scheme: light){[data-theme='notion-bg']{background:#ffffff;}}</style></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/pomodoro/[[...slug]]","query":{},"buildId":"y123MDh7eu-95834M6Jug","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Pomodoro Time Tracker - 5-8-23</title>
+  <link rel="stylesheet" href="./style.css">
 
-                a.appendChild(r);
-              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-              </script><meta name="next-head-count" content="4"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-93db12024e7ff082.js" defer=""></script><script src="/_next/static/chunks/framework-a070cbfff3c750c5.js" defer=""></script><script src="/_next/static/chunks/main-d95285bfce65e73c.js" defer=""></script><script src="/_next/static/chunks/pages/_app-a4ca955b8280638c.js" defer=""></script><script src="/_next/static/chunks/ebaf4c27-a3008b6fcd951704.js" defer=""></script><script src="/_next/static/chunks/1238-9f76ecfc6ca2c8fb.js" defer=""></script><script src="/_next/static/chunks/1664-48f5dd2bdfc4a46a.js" defer=""></script><script src="/_next/static/chunks/4436-8b7b9b02c44a74ba.js" defer=""></script><script src="/_next/static/chunks/9888-eec50656bd8b9e6d.js" defer=""></script><script src="/_next/static/chunks/3501-956520e50b36662c.js" defer=""></script><script src="/_next/static/chunks/4258-3e00fe9b9e01564e.js" defer=""></script><script src="/_next/static/chunks/2326-eca6c13c879e12af.js" defer=""></script><script src="/_next/static/chunks/3919-3fdea1c00b42cdad.js" defer=""></script><script src="/_next/static/chunks/9761-31b59eb9adf72077.js" defer=""></script><script src="/_next/static/chunks/7467-a5865d9a349e8232.js" defer=""></script><script src="/_next/static/chunks/2956-eea70a1fe4bca21e.js" defer=""></script><script src="/_next/static/chunks/3752-d5a35efa2f555f6c.js" defer=""></script><script src="/_next/static/chunks/283-6f359cc733c3faf6.js" defer=""></script><script src="/_next/static/chunks/945-4bb7e66dcde6f4ed.js" defer=""></script><script src="/_next/static/chunks/4250-c3f79f7a61fd321f.js" defer=""></script><script src="/_next/static/chunks/pages/pomodoro/%5B%5B...slug%5D%5D-1eecee98c332059a.js" defer=""></script><script src="/_next/static/y123MDh7eu-95834M6Jug/_buildManifest.js" defer=""></script><script src="/_next/static/y123MDh7eu-95834M6Jug/_ssgManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><style data-emotion="css-global eojdkm">*,*::before,*::after{box-sizing:border-box;}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin:0;}button{outline:none;border:none;background:none;cursor:pointer;}ul[role="list"],ol[role="list"]{list-style:none;}ul{padding:0;}li{list-style:none;}html:focus-within{scroll-behavior:smooth;}body{min-height:100vh;text-rendering:optimizeSpeed;}a:not([class]){text-decoration-skip-ink:auto;}a{-webkit-text-decoration:none;text-decoration:none;}img,picture{max-width:100%;display:block;}input,button,textarea,select{font:inherit;}@media (prefers-reduced-motion: reduce){html:focus-within{scroll-behavior:auto;}*,*::before,*::after{-webkit-animation-duration:0.01ms!important;animation-duration:0.01ms!important;-webkit-animation-iteration-count:1!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;}}</style><style data-emotion="css-global 6e04t">@font-face{src:url('/fonts/Karla-Regular.ttf') format(truetype);font
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer - Minimalist Pomodoro Timer for Working and Studying</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="pomodoro-container">
+    <div id="interval-container">
+      <button id="short-break-interval-btn" class="interval-btn">Short Break</button>
+      <button id="pomodoro-interval-btn" class="interval-btn">Focus</button>
+      <button id="long-break-interval-btn" class="interval-btn">Long Break</button>
+    </div>
+    <div id="timer-container">
+      <div id="time-left">25:00</div>
+    </div>
+    <div id="start-stop-reset-container">
+      <button id="start-stop-btn">Start</button>
+      <button id="reset-btn"><i class="fas fa-redo-alt"></i></button>
+      <button id="settings-btn"><i class="fas fa-cog"></i></button>
+    </div>
+  </div>
+
+  <!-- Modal for Settings -->
+  <div id="settings-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="setting-wrapper">
+      <h3>Settings</h3>
+      <div class="setting-option">
+        <label for="background-color">Choose the Background Color</label>
+        <select id="background-color">
+          <option value="#FFFFFF">LM Default White</option>
+          <option value="#F7F6F3">LM Off White</option>
+          <option value="#F1F1EF">LM Notion Grey</option>
+          <option value="#F4EEEE">LM Notion Brown</option>
+          <option value="#FAEBDD">LM Notion Orange</option>
+          <option value="#FBF3DB">LM Notion Yellow</option>
+          <option value="#EDF3EC">LM Notion Green</option>
+          <option value="#E7F3F8">LM Notion Blue</option>
+          <option value="#F6F3F9">LM Notion Purple</option>
+          <option value="#FAF1F5">LM Notion Pink</option>
+          <option value="#FDEBEC">LM Notion Red</option>
+          
+          <option value="#191919">DM Default</option>
+          <option value="#262626">DM Hover</option>
+          <option value="#202020">DM Sidebar</option>
+          <option value="#434040">DM Notion Brown</option>
+          <option value="#594A3A">DM Notion Orange</option>
+          <option value="#FDEBB9">DM Notion Yellow</option>
+          <option value="#D6FAD8">DM Notion Green</option>
+          <option value="#364954">DM Notion Blue</option>
+          <option value="#443F57">DM Notion Purple</option>
+          <option value="#533B4C">DM Notion Pink</option>
+          <option value="#594141">DM Notion Red</option>
+        </select>
+      </div>
+      <div class="setting-option">
+        <label for="font-color">Choose the Font Color</label>
+        <select id="font-color">
+          <option value="#37352F">LM Notion Default</option>
+          <option value="#787774">LM Notion Grey</option>
+          <option value="#9F6B53">LM Notion Brown</option>
+          <option value="#D9730D">LM Notion Orange</option>
+          <option value="#CB912F">LM Notion Yellow</option>
+          <option value="#448361">LM Notion Green</option>
+          <option value="#337EA9">LM Notion Blue</option>
+          <option value="#9065B0">LM Notion Purple</option>
+          <option value="#C14C8A">LM Notion Pink</option>
+          <option value="#D44C47">LM Notion Red</option>
+          
+          <option value="#979A9B">DM Notion Grey</option>
+           <option value="#D4D4D4">DM White</option>
+          <option value="#937264">DM Notion Brown</option>
+          <option value="#FFA344">DM Notion Orange</option>
+          <option value="#FFDC49">DM Notion Yellow</option>
+          <option value="#4DAB9A">DM Notion Green</option>
+          <option value="#529CCA">DM Notion Blue</option>
+          <option value="#9A6DD7">DM Notion Purple</option>
+          <option value="#E255A1">DM Notion Pink</option>
+          <option value="#FF7369">DM Notion Red</option>
+        </select>
+        <button id="save-btn">Save</button>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
