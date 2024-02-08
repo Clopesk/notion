@@ -6,146 +6,103 @@
 <title>Pomodoro Timer</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    color: #333;
-  }
-
-  #timer-container {
-    position: relative;
-    width: 60%;
-    height: calc(60% * 2 / 3);
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-  }
-
-  #timer {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-
-  #settings-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
+    background-color: #222;
     color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
   }
-
-  #settings {
-    display: none;
+  
+  .container {
+    width: 400px;
+    height: 200px;
+    position: relative;
+  }
+  
+  .timer {
+    font-size: 2em;
+    text-align: center;
+    line-height: 200px;
+    margin: auto;
     position: absolute;
-    top: 40px;
-    right: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
-
-  .slider {
-    -webkit-appearance: none;
-    width: 100px;
-    height: 10px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+  
+  .circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(#333 10%, transparent 10%);
+    background-size: 100% 100%;
+    transform: rotate(-90deg);
   }
-
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
+  
+  .ball {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #007bff;
-    cursor: pointer;
+    background-color: blue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: moveBall 1500s linear forwards;
   }
-
-  .slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #007bff;
-    cursor: pointer;
+  
+  @keyframes moveBall {
+    from {transform: translate(-50%, -50%) rotate(0deg);}
+    to {transform: translate(-50%, -50%) rotate(360deg);}
   }
 </style>
 </head>
 <body>
-<div id="timer-container">
-  <div id="timer">25:00</div>
-  <button id="settings-btn">Settings</button>
-  <div id="settings">
-    <input type="range" min="5" max="25" value="25" class="slider" id="time-range">
-    <label for="sound">Enable Sound:</label>
-    <input type="checkbox" id="sound" checked>
-  </div>
+
+<div class="container">
+  <div class="timer" id="timer">25:00</div>
+  <div class="circle"></div>
+  <div class="ball"></div>
 </div>
 
 <script>
-  const timerDisplay = document.getElementById('timer');
-  const settingsBtn = document.getElementById('settings-btn');
-  const settings = document.getElementById('settings');
-  const timeRange = document.getElementById('time-range');
-  const soundCheckbox = document.getElementById('sound');
-
-  let time = 25 * 60; // Initial time in seconds
-  let timerInterval;
-
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-  }
-
-  function updateTimer() {
-    timerDisplay.textContent = formatTime(time);
-  }
-
-  function startTimer() {
-    timerInterval = setInterval(() => {
-      time--;
-      updateTimer();
-      if (time <= 0) {
-        clearInterval(timerInterval);
-        if (soundCheckbox.checked) {
-          // Play sound alert
-          alert('Time is up!');
-        }
-      }
-    }, 1000);
-  }
-
-  function stopTimer() {
-    clearInterval(timerInterval);
-  }
-
-  settingsBtn.addEventListener('click', () => {
-    settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
-  });
-
-  timeRange.addEventListener('input', () => {
-    time = timeRange.value * 60;
-    updateTimer();
-  });
-
-  updateTimer();
+  // Set the initial time
+  let timeLeft = 1500; // 25 minutes * 60 seconds
+  
+  // Update the timer every second
+  const timer = document.getElementById('timer');
+  const interval = setInterval(() => {
+    // Convert seconds into MM:SS format
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update circle progress
+    const circle = document.querySelector('.circle');
+    const ball = document.querySelector('.ball');
+    const degrees = 360 - (timeLeft / 1500) * 360; // Convert remaining time to degrees
+    circle.style.backgroundImage = `conic-gradient(blue ${degrees}deg, transparent ${degrees}deg)`;
+    
+    // Decrement time left
+    timeLeft--;
+    
+    // If timer reaches zero, stop the interval
+    if (timeLeft < 0) {
+      clearInterval(interval);
+      timer.textContent = "00:00";
+    }
+  }, 1000);
 </script>
+
 </body>
 </html>
-Este código cria um temporizador Pomodoro básico em HTML com as funcionalidades descritas. Ele permite ajustar o tempo do temporizador entre 5 e 25 minutos, iniciar e parar o temporizador e habilitar/desabilitar o som de alerta quando o temporizador chega a zero.
+
