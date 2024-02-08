@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro Timer</title>
+<style>
+  body {
+    background-color: #222;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    width: 400px;
+    height: 200px;
+    position: relative;
+  }
+  
+  .timer {
+    font-size: 2em;
+    text-align: center;
+    line-height: 200px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1; /* Para manter o texto sobreposto ao círculo */
+  }
+  
+  .circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(#333 10%, transparent 10%);
+    background-size: 100% 100%;
+    transform: rotate(-90deg);
+    z-index: 0; /* Para colocar o círculo atrás do texto */
+  }
+  
+  .ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: blue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg); /* Inicialmente na posição 0 graus */
+    animation: moveBall 1500s linear forwards;
+    z-index: 2; /* Para manter a bola sobreposta ao texto */
+  }
+  
+  @keyframes moveBall {
+    from {transform: translate(-50%, -50%) rotate(0deg);}
+    to {transform: translate(-50%, -50%) rotate(360deg);}
+  }
+  
+  .controls {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .control-button {
+    background-color: #333;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="timer" id="timer">25:00</div>
+  <div class="circle"></div>
+  <div class="ball"></div>
+  <div class="controls">
+    <button class="control-button" onclick="stopTimer()"><img src="stop-icon.png" alt="Stop"></button>
+    <button class="control-button" onclick="resetTimer()"><img src="reset-icon.png" alt="Reset"></button>
+    <button class="control-button" onclick="startTimer()"><img src="play-icon.png" alt="Continue"></button>
+  </div>
+</div>
+
+<script>
+  let timeLeft = 1500; // 25 minutes * 60 seconds
+  let interval; // Variável para armazenar o intervalo do temporizador
+  
+  // Função para atualizar o temporizador e o círculo de progresso
+  function updateTimer() {
+    const timer = document.getElementById('timer');
+    const circle = document.querySelector('.circle');
+    const ball = document.querySelector('.ball');
+    
+    // Atualizar o temporizador no formato MM:SS
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Atualizar o círculo de progresso
+    const degrees = 360 - (timeLeft / 1500) * 360; // Converter o tempo restante em graus
+    circle.style.backgroundImage = `conic-gradient(blue ${degrees}deg, transparent ${degrees}deg)`;
+    
+    // Decrementar o tempo restante
+    timeLeft--;
+    
+    // Se o temporizador chegar a zero, parar o intervalo
+    if (timeLeft < 0) {
+      clearInterval(interval);
+      timer.textContent = "00:00";
+    }
+  }
+  
+  // Função para iniciar o temporizador
+  function startTimer() {
+    interval = setInterval(updateTimer, 1000);
+  }
+  
+  // Função para parar o temporizador
+  function stopTimer() {
+    clearInterval(interval);
+  }
+  
+  // Função para resetar o temporizador
+  function resetTimer() {
+    clearInterval(interval);
+    timeLeft = 1500;
+    updateTimer();
+  }
+  
+  // Iniciar o temporizador quando a página carregar
+  window.onload = startTimer;
+</script>
+
+</body>
+</html>
