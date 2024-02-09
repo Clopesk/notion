@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
 <title>Temporizador Digital</title>
 <style>
   body {
@@ -15,27 +16,36 @@
   #timer {
     font-size: 48px;
   }
-  botao{
-   
-    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+ .button-container {
+    margin-bottom: 20px;
+  }
+  .icon-button {
+    font-size: 24px;
+    margin: 10px;
+    padding: 15px;
+    cursor: pointer;
     background-color: transparent;
-    border: 1px solid white;
-    border-radius: 20px;
+    color: white;
+    border: none;
     outline: none;
-}
- botao:hover{
-    background-color: white;
-    color: black;
-    transform: scale(1.2)
- } 
+  }
+  .icon-button:hover {
+    color: #555;
+  }
 
 </style>
 </head>
 <body>
-<div>  
-  <button onclick="setTime(25 * 60)">Pomodoro</button>
-  <button onclick="setTime(5 * 60)">Pausa Curta</button>
-  <button onclick="setTime(10 * 60)">Pausa Longa</button>
+<div class="button-container">
+  <button class="icon-button" onclick="setTime(25 * 60)">
+    <i class="fas fa-hourglass-start"></i> <!-- Ícone Font Awesome para Pomodoro -->
+  </button>
+  <button class="icon-button" onclick="setTime(5 * 60)">
+    <i class="fas fa-mug-hot"></i> <!-- Ícone Font Awesome para Pausa Curta -->
+  </button>
+  <button class="icon-button" onclick="setTime(10 * 60)">
+    <i class="fas fa-bed"></i> <!-- Ícone Font Awesome para Pausa Longa -->
+  </button>
 </div>
 <br>  
 <div id="timer">25:00</div>
