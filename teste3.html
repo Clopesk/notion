@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temporizador Digital</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+  }
+  #timer {
+    font-size: 48px;
+  }
+  button {
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="timer">25:00</div>
+<button id="startPauseBtn" onclick="startPauseTimer()">Start/Pausa</button>
+<button id="resetBtn" onclick="resetTimer()">Inicial</button>
+<button id="configureBtn" onclick="configureTimer()">Configurar</button>
+
+<script>
+  let timerInterval;
+  let timeLeft = 1500; // 25 minutos em segundos
+  let running = false;
+
+  function startPauseTimer() {
+    running = !running;
+    if (running) {
+      timerInterval = setInterval(updateTimer, 1000);
+    } else {
+      clearInterval(timerInterval);
+    }
+  }
+
+  function resetTimer() {
+    running = false;
+    timeLeft = 1500; // 25 minutos em segundos
+    updateDisplay();
+  }
+
+  function updateTimer() {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateDisplay();
+    } else {
+      clearInterval(timerInterval);
+      alert("Tempo esgotado!");
+    }
+  }
+
+  function updateDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById("timer").textContent = displayTime;
+  }
+
+  function configureTimer() {
+    // Implemente a funcionalidade de configuração do temporizador conforme necessário
+    alert("Funcionalidade de configuração ainda não implementada!");
+  }
+</script>
+</body>
+</html>
