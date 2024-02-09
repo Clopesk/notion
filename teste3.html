@@ -47,12 +47,17 @@
     <i class="fas fa-bed"></i> <!-- Ícone Font Awesome para Pausa Longa -->
   </button>
 </div>
-<br>  
+  
 <div id="timer">25:00</div>
  <br> 
-<button id="startPauseBtn" onclick="startPauseTimer()">Start</button>
-<button id="resetBtn" onclick="resetTimer()">Inicial</button>
-<button id="configureBtn" onclick="configureTimer()">Configurar</button>
+<button class="icon-button" id="startPauseBtn" onclick="startPauseTimer()">
+  <i class="fas fa-play"></i> <!-- Ícone Font Awesome para Start -->
+</button>
+<button class="icon-button" id="resetBtn" onclick="resetTimer()">
+  <i class="fas fa-redo-alt"></i> <!-- Ícone Font Awesome para Inicial -->
+</button>
+<button class="icon-button" id="configureBtn" onclick="configureTimer()">
+  <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
 
 <script>
   let timerInterval;
