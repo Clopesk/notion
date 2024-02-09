@@ -15,19 +15,31 @@
   #timer {
     font-size: 48px;
   }
-  button {
+  .botao{
+    border: solid 1px blue;
+    border-radius: 20px;
+    color: blue;
+    background-color: white;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+}
+.botao:hover{
+    background-color: blue;
+    color: white;
+    transform: scale(1.2)
+ } 
+/*  button {
     font-size: 16px;
     margin: 10px;
     padding: 10px 20px;
     cursor: pointer;
-  }
+  } */
 </style>
 </head>
 <body>
 <div>
   <button onclick="setTime(25 * 60)">Pomodoro</button>
-  <button onclick="setTime(10 * 60)">Pausa Curta</button>
-  <button onclick="setTime(5 * 60)">Pausa Longa</button>
+  <button onclick="setTime(5 * 60)">Pausa Curta</button>
+  <button onclick="setTime(10 * 60)">Pausa Longa</button>
 </div>
 <div id="timer">25:00</div>
 <button id="startPauseBtn" onclick="startPauseTimer()">Start</button>
