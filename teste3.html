@@ -110,9 +110,15 @@
     // Implemente a funcionalidade de configuração do temporizador conforme necessário
     alert("Funcionalidade de configuração ainda não implementada!");
   }
+  <audio id="audio" src="beep.mp3"></audio>
+  
   function playSound() {
-    document.getElementById("beep").play();
+    var audio = document.getElementById("audio");
+    audio.play();
   }
+
+
+  
 </script>
 </body>
 </html>
