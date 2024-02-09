@@ -73,10 +73,10 @@
     running = !running;
     if (running) {
       timerInterval = setInterval(updateTimer, 1000);
-      document.getElementById("startPauseBtn").textContent = "Pausa";
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Altera o ícone para Pausa
     } else {
       clearInterval(timerInterval);
-      document.getElementById("startPauseBtn").textContent = "Start";
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
     }
   }
 
@@ -84,7 +84,7 @@
     running = false;
     timeLeft = 1500; // 25 minutos em segundos
     updateDisplay();
-    document.getElementById("startPauseBtn").textContent = "Start";
+    document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
   }
 
   function updateTimer() {
@@ -94,7 +94,8 @@
     } else {
       clearInterval(timerInterval);
       alert("Tempo esgotado!");
-      document.getElementById("startPauseBtn").textContent = "Start";
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      playSound();
     }
   }
 
