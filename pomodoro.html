@@ -3,111 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pomodoro Timer</title>
+<title>Temporizador Digital</title>
 <style>
   body {
-    background-color: #121212;
-    color: white;
     font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  #timer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-  #circle-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 20px;
-  }
-  #circle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 10px solid #ccc;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  #progress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: blue;
-    border-radius: 50%;
-    transform-origin: 50% 100%;
-    transform: rotate(-90deg);
-  }
-  button {
-    background-color: #333;
+    background-color: black;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
+    text-align: center;
+    padding-top: 50px;
   }
+  #timer {
+    font-size: 48px;
+  }
+  botao{
+    border: solid 1px blue;
+    border-radius: 20px;
+    color: blue;
+    background-color: white;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+}
+ botao:hover{
+    background-color: blue;
+    color: white;
+    transform: scale(1.2)
+ } 
+/*  button {
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  } */
 </style>
 </head>
 <body>
-<div id="timer-container">
-  <div id="circle-container">
-    <div id="circle">
-      <div id="progress"></div>
-    </div>
-  </div>
-  <div id="timer">00:00</div>
-  <button onclick="startTimer()">Start</button>
-  <button onclick="pauseTimer()">Pause</button>
-  <button onclick="resetTimer()">Reset</button>
+<div>
+  <button onclick="setTime(25 * 60)">Pomodoro</button>
+  <button onclick="setTime(5 * 60)">Pausa Curta</button>
+  <button onclick="setTime(10 * 60)">Pausa Longa</button>
 </div>
+<div id="timer">25:00</div>
+<button id="startPauseBtn" onclick="startPauseTimer()">Start</button>
+<button id="resetBtn" onclick="resetTimer()">Inicial</button>
+<button id="configureBtn" onclick="configureTimer()">Configurar</button>
 
 <script>
-  let interval;
-  let duration = 1500; // 25 minutes in seconds
-  let timeLeft = duration;
+  let timerInterval;
+  let timeLeft = 1500; // 25 minutos em segundos
+  let running = false;
 
-  function startTimer() {
-    interval = setInterval(updateTimer, 1000);
+  function setTime(seconds) {
+    timeLeft = seconds;
+    updateDisplay();
   }
 
-  function pauseTimer() {
-    clearInterval(interval);
+  function startPauseTimer() {
+    running = !running;
+    if (running) {
+      timerInterval = setInterval(updateTimer, 1000);
+      document.getElementById("startPauseBtn").textContent = "Pausa";
+    } else {
+      clearInterval(timerInterval);
+      document.getElementById("startPauseBtn").textContent = "Start";
+    }
   }
 
   function resetTimer() {
-    clearInterval(interval);
-    timeLeft = duration;
-    updateTimer();
+    running = false;
+    timeLeft = 1500; // 25 minutos em segundos
+    updateDisplay();
+    document.getElementById("startPauseBtn").textContent = "Start";
   }
 
   function updateTimer() {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateDisplay();
+    } else {
+      clearInterval(timerInterval);
+      alert("Tempo esgotado!");
+      document.getElementById("startPauseBtn").textContent = "Start";
+    }
+  }
+
+  function updateDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
+    const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById("timer").textContent = displayTime;
+  }
 
-    const displayMinutes = String(minutes).padStart(2, '0');
-    const displaySeconds = String(seconds).padStart(2, '0');
-
-    document.getElementById('timer').textContent = `${displayMinutes}:${displaySeconds}`;
-
-    const progress = document.getElementById('progress');
-    const angle = 360 - (timeLeft / duration) * 360;
-    progress.style.transform = `rotate(${angle}deg)`;
-
-    timeLeft--;
-
-    if (timeLeft < 0) {
-      clearInterval(interval);
-      // Optionally, you can add code here to handle what happens when the timer reaches zero
-    }
+  function configureTimer() {
+    // Implemente a funcionalidade de configuração do temporizador conforme necessário
+    alert("Funcionalidade de configuração ainda não implementada!");
   }
 </script>
 </body>
