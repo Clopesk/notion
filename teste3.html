@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
 <title>Temporizador Digital</title>
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-image: url('tokyo.jpg'); /* Substitua 'sua_imagem_de_fundo.jpg' pelo caminho para sua imagem de fundo */
-    
+    background-color: black;
     color: white;
     text-align: center;
     padding-top: 50px;
@@ -16,38 +16,77 @@
   #timer {
     font-size: 48px;
   }
-  button {
-    font-size: 16px;
-    margin: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
+ .button-container {
+    margin-bottom: 20px;
   }
+  .icon-button {
+    font-size: 24px;
+    margin: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+  }
+  .icon-button:hover {
+    color: #555;
+  }
+
 </style>
 </head>
 <body>
+<div class="button-container">
+  <button class="icon-button" onclick="setTime(25 * 60)">
+    <i class="fas fa-hourglass-start"></i> <!-- Ícone Font Awesome para Pomodoro -->
+  </button>
+  <button class="icon-button" onclick="setTime(5 * 60)">
+    <i class="fas fa-mug-hot"></i> <!-- Ícone Font Awesome para Pausa Curta -->
+  </button>
+  <button class="icon-button" onclick="setTime(10 * 60)">
+    <i class="fas fa-bed"></i> <!-- Ícone Font Awesome para Pausa Longa -->
+  </button>
+</div>
+  
 <div id="timer">25:00</div>
-<button id="startPauseBtn" onclick="startPauseTimer()">Start/Pausa</button>
-<button id="resetBtn" onclick="resetTimer()">Inicial</button>
-<button id="configureBtn" onclick="configureTimer()">Configurar</button>
+ <br> 
+<button class="icon-button" id="startPauseBtn" onclick="startPauseTimer()">
+  <i class="fas fa-play"></i> <!-- Ícone Font Awesome para Start -->
+</button>
+<button class="icon-button" id="resetBtn" onclick="resetTimer()">
+  <i class="fas fa-redo-alt"></i> <!-- Ícone Font Awesome para Inicial -->
+</button>
+<button class="icon-button" id="configureBtn" onclick="configureTimer()">
+  <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
+</button>
+<audio id="beepSound" src="beep.mp3"></audio>
 
 <script>
   let timerInterval;
-  let timeLeft = 60; // 25 minutos em segundos
+  let timeLeft = 1500; // 25 minutos em segundos
   let running = false;
+
+  function setTime(seconds) {
+    timeLeft = seconds;
+    updateDisplay();
+  }
 
   function startPauseTimer() {
     running = !running;
     if (running) {
       timerInterval = setInterval(updateTimer, 1000);
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Altera o ícone para Pausa
     } else {
       clearInterval(timerInterval);
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
     }
   }
 
   function resetTimer() {
     running = false;
-    timeLeft = 60; // 25 minutos em segundos
+    timeLeft = 1500; // 25 minutos em segundos
     updateDisplay();
+    document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
   }
 
   function updateTimer() {
@@ -57,6 +96,8 @@
     } else {
       clearInterval(timerInterval);
       alert("Tempo esgotado!");
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      playSound();
     }
   }
 
@@ -70,6 +111,11 @@
   function configureTimer() {
     // Implemente a funcionalidade de configuração do temporizador conforme necessário
     alert("Funcionalidade de configuração ainda não implementada!");
+  }
+
+  function playSound() {
+    var audio = document.getElementById("beepSound");
+    audio.play();
   }
 </script>
 </body>
