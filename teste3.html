@@ -53,7 +53,7 @@
 <button class="icon-button" id="startPauseBtn" onclick="startPauseTimer()">
   <i class="fas fa-play"></i> <!-- Ícone Font Awesome para Start -->
 </button>
-<button class="icon-button" id="resetBtn" onclick="resetTimer()">
+<button class="icon-button" id="resetBtn" onclick="resetTimer()" disabled>
   <i class="fas fa-redo-alt"></i> <!-- Ícone Font Awesome para Inicial -->
 </button>
 <button class="icon-button" id="configureBtn" onclick="configureTimer()">
@@ -78,17 +78,20 @@
     if (running) {
       timerInterval = setInterval(updateTimer, 1000);
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Altera o ícone para Pausa
+      document.getElementById("resetBtn").disabled = true; // Desabilita o botão de reset enquanto o temporizador estiver em execução
     } else {
       clearInterval(timerInterval);
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador for pausado
     }
   }
 
   function resetTimer() {
-    running = false;
-    timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
-    updateDisplay();
-    document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+    if (!running) {
+      timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
+      updateDisplay();
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+    }
   }
 
   function updateTimer() {
@@ -99,6 +102,7 @@
       clearInterval(timerInterval);
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
       playSound();
+      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador chegar a zero
     }
   }
 
