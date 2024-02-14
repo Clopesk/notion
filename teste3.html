@@ -59,7 +59,7 @@
 <button class="icon-button" id="configureBtn" onclick="configureTimer()">
   <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
 </button>
-<audio id="beepSound" src="beep.mp3"></audio>
+<audio id="beepSound" src="LimpBizcit.mp3"></audio>
 
 <script>
   let timerInterval;
@@ -95,7 +95,7 @@
       updateDisplay();
     } else {
       clearInterval(timerInterval);
-      alert("Tempo esgotado!");
+      // alert("Tempo esgotado!");
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
       playSound();
     }
