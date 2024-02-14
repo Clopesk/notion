@@ -41,7 +41,6 @@
     <i class="fas fa-hourglass-start"></i> <!-- Ícone Font Awesome para Pomodoro -->
   </button>
   <button class="icon-button" onclick="setTime(5 * 60)">
-    
     <i class="fas fa-mug-hot"></i> <!-- Ícone Font Awesome para Pausa Curta -->
   </button>
   <button class="icon-button" onclick="setTime(10 * 60)">
@@ -66,16 +65,11 @@
   let timerInterval;
   let timeLeft = 1500; // 25 minutos em segundos
   let running = false;
-  let pausacurta = false;
-  let pausalonga = false;
+  let selectedOption = 25; // Opção padrão é 25 minutos
 
   function setTime(seconds) {
     timeLeft = seconds;
-    if (timeleft == 300) {
-      let pausacurta = true;
-    else (timeleft == 600)
-       let pausalonga = true;
-    }    
+    selectedOption = seconds / 60; // Armazena a opção selecionada em minutos
     updateDisplay();
   }
 
@@ -91,16 +85,8 @@
   }
 
   function resetTimer() {
-    if (pausacurta) {
-      timeLeft = 300;    
-    else if (pausalonga)
-      timeLeft = 600;
-    else 
-      timeLeft = 1500;
-    }  
     running = false;
-  
-     
+    timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
     updateDisplay();
     document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
   }
@@ -111,7 +97,6 @@
       updateDisplay();
     } else {
       clearInterval(timerInterval);
-      // alert("Tempo esgotado!");
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
       playSound();
     }
