@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,6 +58,8 @@
 </button>
 <button class="icon-button" id="configureBtn" onclick="configureTimer()">
   <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
+</button>
+<audio id="beepSound" src="beep.mp3"></audio>
 
 <script>
   let timerInterval;
@@ -109,6 +111,11 @@
   function configureTimer() {
     // Implemente a funcionalidade de configuração do temporizador conforme necessário
     alert("Funcionalidade de configuração ainda não implementada!");
+  }
+
+  function playSound() {
+    var audio = document.getElementById("beepSound");
+    audio.play();
   }
 </script>
 </body>
