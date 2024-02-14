@@ -65,9 +65,11 @@
   let timerInterval;
   let timeLeft = 1500; // 25 minutos em segundos
   let running = false;
+  let selectedOption = 25; // Opção de tempo inicial selecionada (em minutos)
 
-  function setTime(seconds) {
-    timeLeft = seconds;
+  function setTime(minutes) {
+    timeLeft = minutes * 60;
+    selectedOption = minutes;
     updateDisplay();
   }
 
@@ -84,7 +86,7 @@
 
   function resetTimer() {
     running = false;
-    timeLeft = 1500; // 25 minutos em segundos
+    timeLeft = selectedOption * 60; // Define o tempo restante para a opção selecionada anteriormente
     updateDisplay();
     document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
   }
@@ -95,7 +97,7 @@
       updateDisplay();
     } else {
       clearInterval(timerInterval);
-      // alert("Tempo esgotado!");
+     // alert("Tempo esgotado!");
       document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
       playSound();
     }
