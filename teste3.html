@@ -6,9 +6,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
 <title>Temporizador Digital</title>
 <style>
-  
-  /* Versão 2.0 - 14/02/2024 Autor: Carlos Lopes*/  
-  
   body {
     font-family: Arial, sans-serif;
     background-color: black;
@@ -77,6 +74,11 @@
   let running = false;
   let selectedOption = 25; // Opção padrão é 25 minutos
 
+  // Função para inicializar o temporizador e os botões após o carregamento da página
+  window.onload = function() {
+    resetTimer();
+  };
+
   function setTime(seconds) {
     timeLeft = seconds;
     selectedOption = seconds / 60; // Armazena a opção selecionada em minutos
@@ -97,11 +99,11 @@
   }
 
   function resetTimer() {
-    if (!running) {
-      timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
-      updateDisplay();
-      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
-    }
+    running = false;
+    timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
+    updateDisplay();
+    document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+    document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset
   }
 
   function updateTimer() {
