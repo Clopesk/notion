@@ -73,7 +73,8 @@
   let timeLeft = 1500; // 25 minutos em segundos
   let running = false;
   let selectedOption = 25; // Opção padrão é 25 minutos
-
+  document.getElementById("resetBtn").disabled = false;
+  
   function setTime(seconds) {
     timeLeft = seconds;
     selectedOption = seconds / 60; // Armazena a opção selecionada em minutos
