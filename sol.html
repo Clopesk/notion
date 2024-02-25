@@ -1,71 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt">
+
+
 <head>
-    <meta charset="UTF-8">
-    <title>Cálculo da Hora do Nascer e Pôr do Sol</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
 </head>
 <body>
-    <h1>Cálculo da Hora do Nascer e Pôr do Sol</h1>
-    <p>
-        Este script calcula a hora do nascer e do pôr do sol para a latitude 38.7071 e longitude -9.13549.
-    </p>
-    <div id="resultado">
-    <script src="https://cdn.jsdelivr.net/npm/mathjs@latest/dist/math.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datetime/0.1.2/datetime.min.js"></script>
-  <script>    
-const math = Math;
-const datetime = require('datetime');
+    <py-script>
+        print("Olá Mundo!")
+    </py-script>
 
-// Definir constantes
-const LATITUDE = 38.7071;
-const LONGITUDE = -9.13549;
 
-// Obter data e hora atual
-const now = datetime.now();
-const formattedDate = now.toLocaleDateString(); // Data atual
-const startDate = datetime.create(now.getFullYear(), 1, 1, 22, 0); // Início do ano
-
-// Calcular a diferença entre as datas
-const difference = now - startDate;
-const n = difference.days + 2; // Número de dias desde o início do ano
-
-// Definir desvios
-const SUNRISE_OFFSET = 0.7148;
-const SUNSET_OFFSET = 0.945;
-
-// Calcular o argumento em radianos
-const arg = math.radians((284 + n) * 360 / 365);
-
-// Calcular a latitude em radianos
-const latRad = math.radians(LATITUDE);
-
-// Calcular a declinação em radianos
-const declination = math.radians(23.45 * math.sin(arg));
-
-// Calcular o tempo do nascer do sol
-const tdArg = -math.tan(latRad) * math.tan(declination);
-const td = 2 / 15 * math.degrees(math.acos(tdArg));
-const sunrise = 12 - td / 2 + SUNRISE_OFFSET;
-
-// Converter a hora do nascer do sol para horas, minutos e segundos
-const [sunriseHour, sunriseMinute] = math.modf(sunrise);
-const sunriseSecond = math.floor(60 * sunriseMinute);
-
-// Calcular o tempo do pôr do sol
-const sunset = 12 + td / 2 + SUNSET_OFFSET;
-
-// Converter a hora do pôr do sol para horas, minutos e segundos
-const [sunsetHour, sunsetMinute] = math.modf(sunset);
-const sunsetSecond = math.floor(60 * sunsetMinute);
-
-// Exibir os resultados
-document.getElementById('resultado').innerHTML = '
-    <p>Data: ${formattedDate}</p>
-    <p>Nascer do Sol: ${sunriseHour}h ${sunriseMinute}m ${sunriseSecond}s</p>
-    <p>Pôr do Sol: ${sunsetHour}h ${sunsetMinute}m ${sunsetSecond}s</p>
-';
-    </script>  
-
-    </div>
 </body>
 </html>
