@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Teste Pyscript</title>
+    <title>Greeting Message</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-   
+
+<style>
+#lbl {
+    font-family: monospace;
+    font-size: x-large;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #000000;
+    text-align: center;
+    line-height: 1.5;
+    height:85% 
+
+
+}
+#date{
+    font-size:large;
+}
+body{
+    background-color: black; /* aliceblue */
+}
+    </style>
 </head>
 <body>
+    <div id="lbl"></div>
+</body>
 	<py-script>
 import math as mt
 import datetime as dt
