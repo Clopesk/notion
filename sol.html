@@ -57,7 +57,6 @@ td = 2/15 * mt.degrees(mt.acos(td_arg))
 
 # Nascer do Sol
 sol_nascer = 12- td/2 + desvio
-print ("sol Nascer: ", sol_nascer)
 sol_nascer= mt.modf(sol_nascer)
 sol_nascer_hr = sol_nascer[1]
 sol_nascer_min = 60 * sol_nascer[0]
@@ -95,11 +94,13 @@ elif hrs > 13 and hrs < sum_sol_por:
   greet = "Boa Tarde"
 else:
   greet = "Boa Noite"
+			      
 dataHoje = data_hora.strftime("%d/%m/%Y")
 date = dayOfWeek[num]+" " + dataHoje
 	
+print(greet)	
 print(date)	
-print("Saudação:", greet)
+
 		
 	</py-script>
 
