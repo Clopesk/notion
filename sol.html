@@ -29,7 +29,7 @@ body{
     </style>
 </head>
 <body>
-    <div id="lbl"></div>
+    <p>Hoje é:</p><label id='today'>
 </body>
 	<py-script>
 import math as mt
@@ -97,7 +97,7 @@ else:
 			      
 dataHoje = data_hora.strftime("%d/%m/%Y")
 totdata = dayOfWeek[num]+" " + dataHoje
-pyscript.write('lbl', totdata)	
+pyscript.write('lbl', dt.date.today().strftime("%d/%m/%Y %H:%M"))	
 print(greet)	
 print(date)	
 
