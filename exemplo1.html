@@ -29,19 +29,12 @@
     </head>
 
     <body>
-        <dialog id="loading">
+ <!--       <dialog id="loading">
             <h1>Loading...</h1>
-        </dialog>
+        </dialog> -->
 
-<!-- <nav class="navbar" style="background-color: #000000">
-            <div class="app-header">
-                <a href="/">
-                    <img src="./assets/logo.png" class="logo" />
-                </a>
-                <a class="title" href="" style="color: #f0ab3c">Hello World</a>
-            </div>
-        </nav> -->
 
+<!-- Código Python -->
         <section class="pyscript">
             Hello world! <br />
             This is the current date and time, as computed by Python:
@@ -52,7 +45,7 @@
                 now = datetime.now()
                 dayOfWeek = ("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
                 num = date.today().weekday() 
-                display(dayOfWeek[num] + now.strftime("%d/%m/%Y"))
+                display(dayOfWeek[num] + " " + now.strftime("%d/%m/%Y"))
             </script>
         </section>
     </body>
