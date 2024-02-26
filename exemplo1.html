@@ -29,23 +29,21 @@
     </head>
 
     <body>
- <!--       <dialog id="loading">
-            <h1>Loading...</h1>
-        </dialog> -->
-
-
-
         <section class="pyscript">
-            Hello world! <br />
-            This is the current date and time, as computed by Python:
+            <!-- Aqui código HTML -->
+            
             <!-- Código Python -->            
             <script type="py">
                 from pyscript import display
-                from datetime import datetime
+                import datetime as dt
                 from datetime import date
+                import math as mt
+
+
                 now = datetime.now()
                 dayOfWeek = ("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
                 num = date.today().weekday() 
+                
                 display(dayOfWeek[num])
                 display(dayOfWeek[num] + " " + now.strftime("%d/%m/%Y"))
             </script>
