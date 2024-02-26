@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Styling</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">
+        <!-- PyScript para definir as variáveis greet e dayOfWeek -->
+        <script type="py">
+            greet = "Bom Dia"
+            dayOfWeek = "Segunda-feira"
+        </script>
+
+        <!-- Exibição das variáveis com PyScript -->
+        <p style="color: white;">Saudação: <span id="greet"></span></p>
+        <p style="color: white;">Dia da Semana: <span id="dayOfWeek"></span></p>
+
+        <!-- PyScript para atualizar os elementos HTML com os valores das variáveis -->
+        <script type="py">
+            document.getElementById("greet").innerText = greet
+            document.getElementById("dayOfWeek").innerText = dayOfWeek
+        </script>
+    </div>
+
+    <!-- Importação do PyScript -->
+    <script src="https://cdn.jsdelivr.net/npm/pyscript@0.8.1/dist/pyscript.min.js"></script>
+</body>
+</html>
