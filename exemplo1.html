@@ -49,7 +49,9 @@
                 from pyscript import display
                 from datetime import datetime
                 now = datetime.now()
-                display(now.strftime("%d/%m/%Y"))
+                dayOfWeek = ("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
+                num = date.today().weekday() 
+                display(dayOfWeek[num] + now.strftime("%d/%m/%Y"))
             </script>
         </section>
     </body>
