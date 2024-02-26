@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html>
+    <head>
+        <!-- Recommended meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+        <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+        <!-- CSS for examples -->
+        <link rel="stylesheet" href="./assets/css/examples.css" />
+
+        <!-- This script tag bootstraps PyScript -->
+        <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+        <!-- for splashscreen -->
+        <style>
+            #loading { outline: none; border: none; background: black }
+        </style>
+        <script type="module">
+            const loading = document.getElementById('loading');
+            addEventListener('py:ready', () => loading.close());
+          <!--  loading.showModal(); -->
+        </script>
+
+        <title>Greeting Message</title>
+        
+    </head>
+
+    <body>
+        <section class="pyscript">
+            <!-- Aqui código HTML -->
+            
+            <!-- Código Python -->            
+            <script type="py">
+from pyscript import display
+import datetime as dt
+from datetime import date
+import math as mt
+lat = 38.7071
+long = - 9.13549
+
+
+data_hora = dt.datetime.now()
+data_hora_formatada = data_hora.strftime("%d/%m/%Y %H:%M") # data actual
+data_hora_passada = dt.datetime(data_hora.year, 1, 1, 22, 00) # inicio do ano.
+diferenca = data_hora - data_hora_passada 
+n = diferenca.days + 2 # número de dias desde o inicio do ano.
+desvio = 0.7148
+
+
+
+arg = mt.radians((284+n)* 360/365) # argumento em radianos
+lat_rad =  mt.radians(lat) # latitude em radianos
+declina = mt.radians(23.45 * mt.sin(arg)) # declinação em radianos
+td_arg = -mt.tan(lat_rad)* mt.tan(declina)
+td = 2/15 * mt.degrees(mt.acos(td_arg)) 
+
+# Nascer do Sol
+sol_nascer = 12- td/2 + desvio
+print ("sol Nascer: ", sol_nascer)
+sol_nascer= mt.modf(sol_nascer)
+sol_nascer_hr = sol_nascer[1]
+sol_nascer_min = 60 * sol_nascer[0]
+
+sol_nascer_conv = mt.modf(sol_nascer_min)
+sol_nascer_min =  sol_nascer_conv[1]
+sol_nascer_seg = 60 * sol_nascer_conv[0]
+sol_nascer_convseg = mt.modf(sol_nascer_seg)
+sol_nascer_seg = sol_nascer_convseg[1]
+
+# Por do Sol
+desvio_por = 0.945
+sol_por = 12 + td/2 + desvio_por
+sol_por= mt.modf(sol_por)
+sol_por_hr = sol_por[1]
+sol_por_min = 60 * sol_por[0]
+
+sol_por_conv = mt.modf(sol_por_min)
+sol_por_min =  sol_por_conv[1]
+sol_por_seg = 60 * sol_por_conv[0]
+sol_por_convseg = mt.modf(sol_por_seg)
+sol_por_seg = sol_por_convseg[1]
+               
+now = dt.datetime.now()
+dayOfWeek = ("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
+num = date.today().weekday() 
+hrs = data_hora.hour
+minutos = data_hora.minute
+hrs = hrs + minutos/60
+sum_sol_nascer= sol_nascer[0] + sol_nascer[1]
+sum_sol_por= sol_por[0] + sol_por[1]
+
+if hrs >= sum_sol_nascer and hrs <= 13:
+  greet = "Bom Dia"
+elif hrs > 13 and hrs < sum_sol_por:
+  greet = "Boa Tarde"
+else:
+ 
+# Usando f-strings para formatar o HTML com as variáveis
+html_code = f"""
+<div style="background-color: black; color: white;">
+  <h1>{greet}</h1>
+  <p>{dayOfWeek[num] + " " + now.strftime("%d/%m/%Y")</p>
+</div>
+"""
+
+display(html_code)
+<!-- display(greet)
+display(dayOfWeek[num] + " " + now.strftime("%d/%m/%Y")) -->
+            </script>
+        </section>
+    </body>
+</html>
