@@ -81,17 +81,6 @@ sol_por_seg = 60 * sol_por_conv[0]
 sol_por_convseg = mt.modf(sol_por_seg)
 sol_por_seg = sol_por_convseg[1]
 
-
-   
-print(sol_nascer_hr)
-print(sol_nascer_min)
-print(sol_nascer_seg)
-print("-----------------------")
-print(sol_por_hr)
-print(sol_por_min)
-print(sol_por_seg)
-print("-----------------------")
-print(n)
 dayOfWeek = ("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo")
 num = date.today().weekday()
 hrs = data_hora.hour
@@ -106,13 +95,14 @@ elif hrs > 13 and hrs < sum_sol_por:
   greet = "Boa Tarde"
 else:
   greet = "Boa Noite"
-
-# Exibindo a saudação
+dataHoje = data_hora.strftime("%d/%m/%Y")
+date = dayOfWeek[num]+" " + dataHoje
+	
+print(date)	
 print("Saudação:", greet)
-print(dayOfWeek[num])
-print(hrs)		
+		
 	</py-script>
 
     
-</body>
+
 </html>
