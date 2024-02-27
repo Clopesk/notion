@@ -7,8 +7,8 @@
 </head>
 <body>
     <h1>Sunrise Sunset Calculator</h1>
-    <p id="sunriseTime">Hora do Nascer do Sol (em formato decimal):</p>
-    <p id="sunsetTime">Hora do Pôr do Sol (em formato decimal):</p>
+    <p id="sunriseTime">Nascer do Sol:</p>
+    <p id="sunsetTime">Pôr do Sol:</p>
 
     <script>
         // Função para calcular a hora decimal do nascer e do pôr do sol
@@ -29,8 +29,8 @@
                     const sunsetDecimal = sunset.getHours() + (sunset.getMinutes() / 60) + (sunset.getSeconds() / 3600);
 
                     // Exibindo os resultados na página
-                    document.getElementById("sunriseTime").innerText = `Hora do Nascer do Sol (em formato decimal): ${sunriseDecimal}`;
-                    document.getElementById("sunsetTime").innerText = `Hora do Pôr do Sol (em formato decimal): ${sunsetDecimal}`;
+                    document.getElementById("sunriseTime").innerText = `Nascer do Sol: ${sunriseDecimal}`;
+                    document.getElementById("sunsetTime").innerText = `Pôr do Sol: ${sunsetDecimal}`;
                 })
                 .catch(error => {
                     console.log("Ocorreu um erro:", error);
