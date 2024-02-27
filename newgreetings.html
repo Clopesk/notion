@@ -1,1 +1,61 @@
+<html> 
+<head>
+    <title>Greeting Message</title> 
+    <style>
+#lbl {
+    font-family: monospace;
+    font-size: x-large;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #000000;
+    text-align: center;
+    line-height: 1.5;
+    height:85% 
 
+
+}
+#date{
+    font-size:large;
+}
+body{
+    background-color: black; /* aliceblue */
+}
+    </style>
+</head>
+<body>
+    <div id="lbl"></div>
+</body>
+
+<script>
+    var weekday = new Array(7);
+    weekday[0] = "Domingo";
+    weekday[1] = "Segunda";
+    weekday[2] = "Terça";
+    weekday[3] = "Quarta";
+    weekday[4] = "Quinta";
+    weekday[5] = "Sexta";
+    weekday[6] = "Sábado";
+
+    
+    var today = new Date();
+    var hrs = today.getHours();
+    
+    var dayOfWeek = weekday[today.getDay()];
+    var date = dayOfWeek+" " + today.getDate() + "/" +(today.getMonth()+1) +'/'+today.getFullYear();
+
+    var greet;
+
+    if (hrs >= 5 && hrs <= 13){
+        greet = 'Bom Dia  ';
+    } else if (hrs > 13 && hrs <= 20){
+        greet = 'Boa Tarde ';
+    } else {
+        greet = 'Boa Noite  ';  
+    }
+
+
+    
+    document.getElementById('lbl').innerHTML =
+        greet+=`<div id="date">${date}</div>`;
+</script> 
+</html>
