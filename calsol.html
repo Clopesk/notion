@@ -11,12 +11,15 @@
     <p id="sunsetTime"></p>
 
     <script>
-        // Função para calcular a hora decimal do nascer e do pôr do sol
-        function calcularHorasDecimal(latitude, longitude) {
+       
+        
             // URL da API Sunrise-Sunset.org
-            const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
-
-            // Fazendo requisição à API
+            
+            var latitude = 38.7071;
+            var longitude = -9.13549;   
+        apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
+                      
+        // Fazendo requisição à API
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
@@ -35,10 +38,8 @@
                 .catch(error => {
                     console.log("Ocorreu um erro:", error);
                 });
-        }
+        
 
-        // Chame a função com as coordenadas do local desejado
-        calcularHorasDecimal(38.7071, -9.13549); 
     </script>
 </body>
 </html>
