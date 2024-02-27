@@ -5,7 +5,7 @@
 #lbl {
     font-family: monospace;
     font-size: x-large;
-    color: #000000;
+    color: #ffffff;
     padding: 5px;
     border: 1px solid #000000;
     text-align: center;
@@ -18,7 +18,7 @@
     font-size:large;
 }
 body{
-    background-color: white; /* aliceblue */
+    background-color: black; /* aliceblue */
 }
     </style>
 </head>
@@ -27,12 +27,14 @@ body{
 </body>
 
 <script>
-      // Função para calcular a hora decimal do nascer e do pôr do sol
-        function calcularHorasDecimal(latitude, longitude) {
-            // URL da API Sunrise-Sunset.org
-            const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
+    // calcular a hora decimal do nascer e do pôr do sol
+        
+    // URL da API Sunrise-Sunset.org
+    var latitude = 38.7071; 
+    var longitude = -9.13549;    
+    const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
 
-            // Fazendo requisição à API
+    // Fazendo requisição à API
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
@@ -43,10 +45,9 @@ body{
                     // Convertendo para horas decimais
                     const sunriseDecimal = sunrise.getHours() + (sunrise.getMinutes() / 60) + (sunrise.getSeconds() / 3600);
                     const sunsetDecimal = sunset.getHours() + (sunset.getMinutes() / 60) + (sunset.getSeconds() / 3600);
-
-                    // Exibindo os resultados na página
-                    // document.getElementById("sunriseTime").innerText = `Nascer do Sol: ${sunriseDecimal}`;
-                   // document.getElementById("sunsetTime").innerText = `Pôr do Sol: ${sunsetDecimal}`;
+            .catch(error => {
+                    console.log("Ocorreu um erro:", error);
+            });                    
                     var weekday = new Array(7);
                     weekday[0] = "Domingo";
                     weekday[1] = "Segunda";
@@ -74,13 +75,10 @@ body{
     
     document.getElementById('lbl').innerHTML =
         greet+=`<div id="date">${date}</div>`;                })
-                .catch(error => {
-                    console.log("Ocorreu um erro:", error);
-                });
-        }
+                
+        
 
-    // Chame a função com as coordenadas do local desejado
-    calcularHorasDecimal(38.7071, -9.13549);     
+    
     
 </script> 
 </html>
