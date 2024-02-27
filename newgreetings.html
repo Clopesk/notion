@@ -24,6 +24,8 @@ body{
 </head>
 <body>
     <div id="lbl"></div>
+    <p id="sunriseTime"></p>
+    <p id="sunsetTime"></p>    
 </body>
 
 <script>
@@ -45,6 +47,8 @@ body{
                     // Convertendo para horas decimais
                     const sunriseDecimal = sunrise.getHours() + (sunrise.getMinutes() / 60) + (sunrise.getSeconds() / 3600);
                     const sunsetDecimal = sunset.getHours() + (sunset.getMinutes() / 60) + (sunset.getSeconds() / 3600);
+                    document.getElementById("sunriseTime").innerText = `Nascer do Sol: ${sunriseDecimal}`;
+                    document.getElementById("sunsetTime").innerText = `Pôr do Sol: ${sunsetDecimal}`;            
             .catch(error => {
                     console.log("Ocorreu um erro:", error);
             });                    
