@@ -5,18 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saudações</title>
 <style>
+  #lbl {
+    font-family: monospace;
+    font-size: x-large;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #000000;
+    text-align: center;
+    line-height: 1.5;
+    height: 85%;
+  }
+  #date {
+    font-size: large;
+  }
   body {
     background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 50px;
   }
 </style>
 </head>
 <body>
 
-<div id="saudacao"></div>
+<div id="lbl"></div>
+<div id="date"></div>
 
 <script>
   function saudacaoPersonalizada() {
@@ -55,8 +65,12 @@
         const dataAtual = agora.toLocaleDateString('pt-BR');
 
         // Exibir a saudação personalizada no bloco HTML
-        const saudacaoDiv = document.getElementById("saudacao");
-        saudacaoDiv.innerHTML = `<p>${saudacao}</p><p>${diaDaSemana}, ${dataAtual}</p>`;
+        const saudacaoDiv = document.getElementById("lbl");
+        saudacaoDiv.innerHTML = `${saudacao}`;
+
+        // Exibir a data no bloco HTML
+        const dataDiv = document.getElementById("date");
+        dataDiv.innerHTML = `${diaDaSemana}, ${dataAtual}`;
       })
       .catch(error => console.error('Erro ao obter os dados do nascer e do pôr do sol:', error));
   }
