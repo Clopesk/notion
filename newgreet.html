@@ -21,36 +21,44 @@
 <script>
   function saudacaoPersonalizada() {
     // Coordenadas da localização (latitude e longitude)
-    const latitude = 40.7128; // Exemplo de latitude (Nova Iorque)
-    const longitude = -74.0060; // Exemplo de longitude (Nova Iorque)
-    
+    const latitude = 38.7071;
+    const longitude = -9.13549;
+
+    // API URL para obter nascer e pôr do sol
+    const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
+
     // Obter a data e hora atual
     const agora = new Date();
     const hora = agora.getHours();
     
-    // Calcular o nascer e o pôr do sol usando uma API de previsão do tempo (exemplo)
-    // Este é um exemplo simplificado, pode ser necessário usar uma API real para obter dados precisos
-    const nascerDoSol = new Date(agora); // Exemplo: nascer do sol às 7h
-    const porDoSol = new Date(agora); // Exemplo: pôr do sol às 18h
-    
-    // Verificar a hora atual em relação ao nascer e ao pôr do sol
-    let saudacao = "";
-    if (hora >= nascerDoSol.getHours() && hora < 12) {
-      saudacao = "Bom Dia";
-    } else if (hora >= 12 && hora < porDoSol.getHours()) {
-      saudacao = "Boa Tarde";
-    } else {
-      saudacao = "Boa Noite";
-    }
-    
-    // Obter o dia da semana e a data atual
-    const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-    const diaDaSemana = diasDaSemana[agora.getDay()];
-    const dataAtual = agora.toLocaleDateString('pt-BR');
-    
-    // Exibir a saudação personalizada no bloco HTML
-    const saudacaoDiv = document.getElementById("saudacao");
-    saudacaoDiv.innerHTML = `<p>${saudacao}</p><p>${diaDaSemana}, ${dataAtual}</p>`;
+    // Requisição para a API de nascer e pôr do sol
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Extrair as informações de nascer e pôr do sol da resposta da API
+        const nascerDoSol = new Date(data.results.sunrise);
+        const porDoSol = new Date(data.results.sunset);
+
+        // Verificar a hora atual em relação ao nascer e ao pôr do sol
+        let saudacao = "";
+        if (hora >= nascerDoSol.getHours() && hora < 12) {
+          saudacao = "Bom Dia";
+        } else if (hora >= 12 && hora < porDoSol.getHours()) {
+          saudacao = "Boa Tarde";
+        } else {
+          saudacao = "Boa Noite";
+        }
+        
+        // Obter o dia da semana e a data atual
+        const diasDaSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+        const diaDaSemana = diasDaSemana[agora.getDay()];
+        const dataAtual = agora.toLocaleDateString('pt-BR');
+
+        // Exibir a saudação personalizada no bloco HTML
+        const saudacaoDiv = document.getElementById("saudacao");
+        saudacaoDiv.innerHTML = `<p>${saudacao}</p><p>${diaDaSemana}, ${dataAtual}</p>`;
+      })
+      .catch(error => console.error('Erro ao obter os dados do nascer e do pôr do sol:', error));
   }
   
   // Chamar a função para exibir a saudação personalizada quando a página for carregada
