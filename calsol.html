@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunrise Sunset Calculator</title>
+</head>
+<body>
+    <h1>Sunrise Sunset Calculator</h1>
+    <p id="sunriseTime">Hora do Nascer do Sol (em formato decimal):</p>
+    <p id="sunsetTime">Hora do Pôr do Sol (em formato decimal):</p>
+
+    <script>
+        // Função para calcular a hora decimal do nascer e do pôr do sol
+        function calcularHorasDecimal(latitude, longitude) {
+            // URL da API Sunrise-Sunset.org
+            const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
+
+            // Fazendo requisição à API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Obtendo os horários do nascer e do pôr do sol
+                    const sunrise = new Date(data.results.sunrise);
+                    const sunset = new Date(data.results.sunset);
+
+                    // Convertendo para horas decimais
+                    const sunriseDecimal = sunrise.getHours() + (sunrise.getMinutes() / 60) + (sunrise.getSeconds() / 3600);
+                    const sunsetDecimal = sunset.getHours() + (sunset.getMinutes() / 60) + (sunset.getSeconds() / 3600);
+
+                    // Exibindo os resultados na página
+                    document.getElementById("sunriseTime").innerText = `Hora do Nascer do Sol (em formato decimal): ${sunriseDecimal}`;
+                    document.getElementById("sunsetTime").innerText = `Hora do Pôr do Sol (em formato decimal): ${sunsetDecimal}`;
+                })
+                .catch(error => {
+                    console.log("Ocorreu um erro:", error);
+                });
+        }
+
+        // Chame a função com as coordenadas do local desejado
+        calcularHorasDecimal(-22.9035, -43.2096); // Exemplo de latitude e longitude (Rio de Janeiro)
+    </script>
+</body>
+</html>
