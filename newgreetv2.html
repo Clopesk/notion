@@ -42,8 +42,7 @@
 
     // Obter a data e hora atual
     const agora = new Date();
-    const hora = agora.getHours();
-    
+    const hora = agora.getHours() + (agora.getMinutes() / 60) + (agora.getSeconds() / 3600);     
     // Requisição para a API de nascer e pôr do sol
     fetch(apiUrl)
       .then(response => response.json())
@@ -51,12 +50,12 @@
         // Extrair as informações de nascer e pôr do sol da resposta da API
         const nascerDoSol = new Date(data.results.sunrise);
         const porDoSol = new Date(data.results.sunset);
-
-        // Verificar a hora atual em relação ao nascer e ao pôr do sol
+        const nascerDoSolDecimal = nascerDoSol.getHours() + (nascerDoSol.getMinutes() / 60) + (nascerDoSol.getSeconds() / 3600);
+        const porDoSolDecimal = porDoSol.getHours() + (porDoSol.getMinutes() / 60) + (porDoSol.getSeconds() / 3600);        // Verificar a hora atual em relação ao nascer e ao pôr do sol
         let saudacao = "";
-        if (hora >= nascerDoSol.getHours() && hora < 12) {
+        if (hora >= nascerDoSolDecimal && hora < 12) {
           saudacao = "Bom Dia";
-        } else if (hora >= 12 && hora < porDoSol.getHours()) {
+        } else if (hora >= 12 && hora < porDoSolDecimal) {
           saudacao = "Boa Tarde";
         } else {
           saudacao = "Boa Noite";
