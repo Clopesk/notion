@@ -27,29 +27,44 @@ body{
 </body>
 
 <script>
-    var weekday = new Array(7);
-    weekday[0] = "Domingo";
-    weekday[1] = "Segunda";
-    weekday[2] = "Terça";
-    weekday[3] = "Quarta";
-    weekday[4] = "Quinta";
-    weekday[5] = "Sexta";
-    weekday[6] = "Sábado";
+      // Função para calcular a hora decimal do nascer e do pôr do sol
+        function calcularHorasDecimal(latitude, longitude) {
+            // URL da API Sunrise-Sunset.org
+            const apiUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`;
 
-    
-    var today = new Date();
-   
-    var hrs = today.getHours() + (today.getMinutes() / 60) + (today.getSeconds() / 3600);    
-    
-    
-    var dayOfWeek = weekday[today.getDay()];
-    var date = dayOfWeek+" " + today.getDate() + "/" +(today.getMonth()+1) +'/'+today.getFullYear();
+            // Fazendo requisição à API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Obtendo os horários do nascer e do pôr do sol
+                    const sunrise = new Date(data.results.sunrise);
+                    const sunset = new Date(data.results.sunset);
 
-    var greet;
+                    // Convertendo para horas decimais
+                    const sunriseDecimal = sunrise.getHours() + (sunrise.getMinutes() / 60) + (sunrise.getSeconds() / 3600);
+                    const sunsetDecimal = sunset.getHours() + (sunset.getMinutes() / 60) + (sunset.getSeconds() / 3600);
 
-    if (hrs >= 5 && hrs <= 13){
+                    // Exibindo os resultados na página
+                    // document.getElementById("sunriseTime").innerText = `Nascer do Sol: ${sunriseDecimal}`;
+                   // document.getElementById("sunsetTime").innerText = `Pôr do Sol: ${sunsetDecimal}`;
+                    var weekday = new Array(7);
+                    weekday[0] = "Domingo";
+                    weekday[1] = "Segunda";
+                    weekday[2] = "Terça";
+                    weekday[3] = "Quarta";
+                    weekday[4] = "Quinta";
+                    weekday[5] = "Sexta";
+                    weekday[6] = "Sábado";
+                    var today = new Date();
+                    var hrs = today.getHours() + (today.getMinutes() / 60) + (today.getSeconds() / 3600);    
+                    var dayOfWeek = weekday[today.getDay()];
+                    var date = dayOfWeek+" " + today.getDate() + "/" +(today.getMonth()+1) +'/'+today.getFullYear();
+
+                    var greet;
+
+    if (hrs >= sunriseDecimal && hrs <= 13){
         greet = 'Bom Dia  ';
-    } else if (hrs > 13 && hrs <= 20){
+    } else if (hrs > 13 && hrs <= sunsetDecimal{
         greet = 'Boa Tarde ';
     } else {
         greet = 'Boa Noite  ';  
@@ -58,6 +73,14 @@ body{
 
     
     document.getElementById('lbl').innerHTML =
-        greet+=`<div id="date">${date}</div>`;
+        greet+=`<div id="date">${date}</div>`;                })
+                .catch(error => {
+                    console.log("Ocorreu um erro:", error);
+                });
+        }
+
+    // Chame a função com as coordenadas do local desejado
+    calcularHorasDecimal(38.7071, -9.13549);     
+    
 </script> 
 </html>
