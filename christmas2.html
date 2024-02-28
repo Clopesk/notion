@@ -13,9 +13,9 @@
     }
     .countdown-container {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         margin-top: 50px;
     }
     .countdown-title {
@@ -23,8 +23,11 @@
         font-family: 'Goudy Bookletter 1911', sans-serif; /* Fonte elegante e natalícia */
         margin-bottom: 20px;
     }
+    .countdown-items {
+        display: flex;
+    }
     .countdown-item {
-        margin: 10px;
+        margin: 0 10px;
     }
     .countdown-square {
         width: 80px;
@@ -38,7 +41,7 @@
     }
     .countdown-number {
         font-weight: bold;
-        font-size: 32px;
+        font-size: 24px;
     }
     .countdown-text {
         font-size: 14px;
@@ -48,28 +51,30 @@
 <body>
 <div class="countdown-container">
     <div class="countdown-title">Dias para o Natal!</div>
-    <div class="countdown-item">
-        <div class="countdown-square" style="background-color: red;">
-            <div id="days" class="countdown-number">00</div>
-            <div class="countdown-text">Dias</div>
+    <div class="countdown-items">
+        <div class="countdown-item">
+            <div class="countdown-square" style="background-color: red;">
+                <div id="days" class="countdown-number">00</div>
+                <div class="countdown-text">Dias</div>
+            </div>
         </div>
-    </div>
-    <div class="countdown-item">
-        <div class="countdown-square" style="background-color: gray;">
-            <div id="hours" class="countdown-number">00</div>
-            <div class="countdown-text">Horas</div>
+        <div class="countdown-item">
+            <div class="countdown-square" style="background-color: gray;">
+                <div id="hours" class="countdown-number">00</div>
+                <div class="countdown-text">Horas</div>
+            </div>
         </div>
-    </div>
-    <div class="countdown-item">
-        <div class="countdown-square" style="background-color: blue;">
-            <div id="minutes" class="countdown-number">00</div>
-            <div class="countdown-text">Minutos</div>
+        <div class="countdown-item">
+            <div class="countdown-square" style="background-color: blue;">
+                <div id="minutes" class="countdown-number">00</div>
+                <div class="countdown-text">Minutos</div>
+            </div>
         </div>
-    </div>
-    <div class="countdown-item">
-        <div class="countdown-square" style="background-color: brown;">
-            <div id="seconds" class="countdown-number">00</div>
-            <div class="countdown-text">Segundos</div>
+        <div class="countdown-item">
+            <div class="countdown-square" style="background-color: brown;">
+                <div id="seconds" class="countdown-number">00</div>
+                <div class="countdown-text">Segundos</div>
+            </div>
         </div>
     </div>
 </div>
