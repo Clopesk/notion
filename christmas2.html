@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown to Christmas</title>
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .countdown-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .countdown-title {
+        font-size: 24px;
+        font-family: 'Goudy Bookletter 1911', sans-serif; /* Fonte elegante e natalícia */
+        margin-bottom: 20px;
+    }
+    .countdown-item {
+        margin: 10px;
+    }
+    .countdown-square {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .countdown-number {
+        font-weight: bold;
+        font-size: 32px;
+    }
+    .countdown-text {
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+<div class="countdown-container">
+    <div class="countdown-title">Dias para o Natal!</div>
+    <div class="countdown-item">
+        <div class="countdown-square" style="background-color: red;">
+            <div id="days" class="countdown-number">00</div>
+            <div class="countdown-text">Dias</div>
+        </div>
+    </div>
+    <div class="countdown-item">
+        <div class="countdown-square" style="background-color: gray;">
+            <div id="hours" class="countdown-number">00</div>
+            <div class="countdown-text">Horas</div>
+        </div>
+    </div>
+    <div class="countdown-item">
+        <div class="countdown-square" style="background-color: blue;">
+            <div id="minutes" class="countdown-number">00</div>
+            <div class="countdown-text">Minutos</div>
+        </div>
+    </div>
+    <div class="countdown-item">
+        <div class="countdown-square" style="background-color: brown;">
+            <div id="seconds" class="countdown-number">00</div>
+            <div class="countdown-text">Segundos</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateCountdown() {
+        const currentTime = new Date();
+        const christmasDate = new Date(currentTime.getFullYear(), 11, 25); // Christmas is on December 25th
+        const difference = christmasDate - currentTime;
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+        document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
