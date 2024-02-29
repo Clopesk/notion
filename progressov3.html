@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Progress Timer</title>
+<style>
+    body, html {
+        background-color: #000;
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container {
+        text-align: center;
+    }
+
+    .chart {
+        position: relative;
+        margin: 80px;
+        width: 220px;
+        height: 220px;
+    }
+    
+    canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    span {
+        color: #ffffff;
+        display: block;
+        line-height: 220px;
+        text-align: center;
+        width: 220px;
+        font-family: sans-serif;
+        font-size: 32px;
+        font-weight: 100;
+        margin-left: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="chart" id="graph" data-time="300"></div> <!-- 300 seconds = 5 minutes -->
+</div>
+
+<script>
+    var el = document.getElementById('graph'); // get canvas
+    
+    var options = {
+        time: el.getAttribute('data-time') || 300, // default 5 minutes
+        size: el.getAttribute('data-size') || 220,
+        lineWidth: el.getAttribute('data-line') || 15,
+        rotate: el.getAttribute('data-rotate') || 0
+    };
+    
+    var canvas = document.createElement('canvas');
+    var span = document.createElement('span');
+    span.textContent = formatTime(options.time); // format initial time
+        
+    if (typeof(G_vmlCanvasManager) !== 'undefined') {
+        G_vmlCanvasManager.initElement(canvas);
+    }
+    
+    var ctx = canvas.getContext('2d');
+    canvas.width = canvas.height = options.size;
+    
+    el.appendChild(span);
+    el.appendChild(canvas);
+    
+    ctx.translate(options.size / 2, options.size / 2); // change center
+    ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
+    
+    var radius = (options.size - options.lineWidth) / 2;
+    
+    function drawCircle(color, lineWidth, percent) {
+        percent = Math.min(Math.max(0, percent || 1), 1);
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
+        ctx.strokeStyle = color;
+        ctx.lineCap = 'round'; // butt, round or square
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+    }
+    
+    function updateTimer() {
+        var timeLeft = options.time;
+        var interval = setInterval(function() {
+            timeLeft--;
+            span.textContent = formatTime(timeLeft);
+            drawCircle('#87CEFA', options.lineWidth, 1); // Background circle
+            drawCircle('#0000FF', options.lineWidth, timeLeft / options.time); // Progress circle
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+            }
+        }, 1000); // Update every second
+    }
+    
+    function formatTime(seconds) {
+        var minutes = Math.floor(seconds / 60);
+        var remainingSeconds = seconds % 60;
+        return pad(minutes) + ':' + pad(remainingSeconds);
+    }
+    
+    function pad(num) {
+        return (num < 10 ? '0' : '') + num;
+    }
+    
+    updateTimer();
+</script>
+
+</body>
+</html>
