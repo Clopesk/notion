@@ -96,7 +96,7 @@
             timeLeft--;
             span.textContent = formatTime(timeLeft);
             drawCircle('#000000', options.lineWidth, timeLeft / options.time); // Background circle
-            drawCircle('#0000FF', options.lineWidth, timeLeft / options.time); // Progress circle
+            drawCircle('#FFFFFF', options.lineWidth, timeLeft / options.time); // Progress circle
             if (timeLeft <= 0) {
                 clearInterval(interval);
             }
