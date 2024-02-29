@@ -76,7 +76,7 @@
     el.appendChild(canvas);
     
     ctx.translate(options.size / 2, options.size / 2); // change center
-    ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
+    ctx.rotate((1 / 2 + options.rotate / 180) * Math.PI); // rotate 90 deg, changing direction to clockwise
     
     var radius = (options.size - options.lineWidth) / 2;
     
