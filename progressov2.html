@@ -43,13 +43,40 @@
         font-weight: 100;
         margin-left: 5px;
     }
+    #timer {
+    font-size: 48px;
+  }
+ .button-container {
+    margin-bottom: 20px;
+  }
+  .icon-button {
+    font-size: 24px;
+    margin: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    opacity: 1; /* Opacidade padrão */
+    transition: opacity 0.3s ease; /* Transição suave para a opacidade */
+  }
+  .icon-button:hover {
+    color: #555;
+  }
+  .icon-button:disabled {
+    opacity: 0.5; /* Reduz a opacidade quando desabilitado */
+    color: #888; /* Cor do texto mais clara quando desabilitado */
+    cursor: not-allowed; /* Cursor de não permitido quando desabilitado */
+      
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="chart" id="graph" data-percent="48"></div>
-</div>
+    <div class="chart" id="graph" data-percent="48">
+    <p>xpto</p></div>
 
 <script>
     var el = document.getElementById('graph'); // get canvas
