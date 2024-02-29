@@ -20,19 +20,14 @@
         border-radius: 50%;
         position: relative;
         background: black;
+        border: 4px solid white;
     }
 
     .progress {
-        width: calc(100% - 8px);
-        height: calc(100% - 8px);
+        width: 100%;
+        height: 100%;
         position: absolute;
-        top: 4px;
-        left: 4px;
-        border: 4px solid blue;
-        border-radius: 50%;
-        clip: rect(0, 100px, 200px, 50px);
-        transform: rotate(-90deg);
-        transform-origin: center;
+        clip: rect(0, 100px, 200px, 0);
     }
 </style>
 </head>
@@ -42,26 +37,20 @@
 </div>
 
 <script>
-    // Função para atualizar o progresso do círculo
-    function updateProgress(prog) {
-        var degrees = prog * 360;
-        var progress = document.getElementById('progress');
-        progress.style.clip = 'rect(0, 100px, 200px, ' + (100 - prog * 100) + 'px)';
-        progress.style.transform = 'rotate(' + (-90 + degrees) + 'deg)';
-    }
+    // Calcular a porcentagem
+    var prog = 0.5; // Exemplo: 50%
 
-    // Exemplo: variável prog = 0.5
-    var prog = 0.5;
-    updateProgress(prog); // Atualizar o progresso inicial
+    // Converter a porcentagem em graus
+    var degrees = prog * 360;
 
-    // Exemplo de alteração do valor de prog (0.8)
-    setTimeout(function() {
-        prog = 0.8;
-        updateProgress(prog);
-    }, 2000); // Alterar o valor de prog após 2 segundos (para fins de demonstração)
+    // Configurar a largura da borda de acordo com a porcentagem
+    var circle = document.getElementById('circle');
+    var progress = document.getElementById('progress');
+    circle.style.borderTopColor = "blue";
+    progress.style.borderTopColor = "white";
+    circle.style.borderLeftColor = "blue";
+    progress.style.borderLeftColor = "white";
+    progress.style.transform = 'rotate(' + degrees + 'deg)';
 </script>
 </body>
 </html>
-
-
-
