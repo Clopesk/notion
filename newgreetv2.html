@@ -50,7 +50,7 @@
         // Extrair as informações de nascer e pôr do sol da resposta da API
         const nascerDoSol = new Date(data.results.sunrise);
         const porDoSol = new Date(data.results.sunset);
-        var desvio = 0.4667;
+        var desvio = 0.4667; // corrigir o crepúsculo 28 minutos
         const nascerDoSolDecimal = nascerDoSol.getHours() + (nascerDoSol.getMinutes() / 60) + (nascerDoSol.getSeconds() / 3600) - desvio;
         const porDoSolDecimal = porDoSol.getHours() + (porDoSol.getMinutes() / 60) + (porDoSol.getSeconds() / 3600) + desvio;    
         let saudacao = "";
