@@ -48,14 +48,14 @@
 <body>
 
 <div class="container">
-    <div class="chart" id="graph" data-time="1500"></div> <!-- 1500 seconds = 25 minutes -->
+    <div class="chart" id="graph" data-time="600"></div> <!-- 1500 seconds = 25 minutes -->
 </div>
 
 <script>
     var el = document.getElementById('graph'); // get canvas
     
     var options = {
-        time: el.getAttribute('data-time') || 1500, // default 25 minutes
+        time: el.getAttribute('data-time') || 600, // default 25 minutes
         size: el.getAttribute('data-size') || 220,
         lineWidth: el.getAttribute('data-line') || 15,
         rotate: el.getAttribute('data-rotate') || 0
