@@ -83,7 +83,7 @@
     function drawCircle(color, lineWidth, percent) {
         percent = Math.min(Math.max(0, percent || 1), 1);
         ctx.beginPath();
-        ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
+        ctx.arc(0, 0, radius, Math.PI * 2 * (1 - percent), Math.PI * 2, false); // alterando para iniciar de 0 a 100%
         ctx.strokeStyle = color;
         ctx.lineCap = 'round'; // butt, round or square
         ctx.lineWidth = lineWidth;
@@ -95,8 +95,8 @@
         var interval = setInterval(function() {
             timeLeft--;
             span.textContent = formatTime(timeLeft);
-            drawCircle('#000000', options.lineWidth, timeLeft / options.time); // Background circle
-            drawCircle('#FFFFFF', options.lineWidth, timeLeft / options.time); // Progress circle
+            drawCircle('#87CEFA', options.lineWidth, timeLeft / options.time); // Background circle
+            drawCircle('#0000FF', options.lineWidth, timeLeft / options.time); // Progress circle
             if (timeLeft <= 0) {
                 clearInterval(interval);
             }
