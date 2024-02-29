@@ -73,12 +73,98 @@
 </style>
 </head>
 <body>
+<div class="button-container">
+  <button class="icon-button" onclick="setTime(25 * 60)">
+    <i class="fas fa-hourglass-start"></i> <!-- Ícone Font Awesome para Pomodoro -->
+  </button>
+  <button class="icon-button" onclick="setTime(5 * 60)">
+    <i class="fas fa-mug-hot"></i> <!-- Ícone Font Awesome para Pausa Curta -->
+  </button>
+  <button class="icon-button" onclick="setTime(10 * 60)">
+    <i class="fas fa-bed"></i> <!-- Ícone Font Awesome para Pausa Longa -->
+  </button>
+</div>
+  
+<div id="timer">25:00</div>
+ <br> 
+<button class="icon-button" id="startPauseBtn" onclick="startPauseTimer()">
+  <i class="fas fa-play"></i> <!-- Ícone Font Awesome para Start -->
+</button>
+<button class="icon-button" id="resetBtn" onclick="resetTimer()" disabled>
+  <i class="fas fa-redo-alt"></i> <!-- Ícone Font Awesome para Inicial -->
+</button>
+<button class="icon-button" id="configureBtn" onclick="configureTimer()">
+  <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
+</button>
+<audio id="beepSound" src="birds.mp3"></audio>
+
 
 <div class="container">
     <div class="chart" id="graph" data-percent="48">
-    <p>xpto</p></div>
-
+    </div>
 <script>
+  let timerInterval;
+  let timeLeft = 1500; // 25 minutos em segundos
+  let running = false;
+  let selectedOption = 25; // Opção padrão é 25 minutos
+  document.getElementById("resetBtn").disabled = false;
+  
+  function setTime(seconds) {
+    timeLeft = seconds;
+    selectedOption = seconds / 60; // Armazena a opção selecionada em minutos
+    updateDisplay();
+  }
+
+  function startPauseTimer() {
+    running = !running;
+    if (running) {
+      timerInterval = setInterval(updateTimer, 1000);
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Altera o ícone para Pausa
+      document.getElementById("resetBtn").disabled = true; // Desabilita o botão de reset enquanto o temporizador estiver em execução
+    } else {
+      clearInterval(timerInterval);
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador for pausado
+    }
+  }
+
+  function resetTimer() {
+    if (!running) {
+      timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
+      updateDisplay();
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+    }
+  }
+
+  function updateTimer() {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateDisplay();
+    } else {
+      clearInterval(timerInterval);
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      playSound();
+      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador chegar a zero
+    }
+  }
+
+  function updateDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById("timer").textContent = displayTime;
+  }
+
+  function configureTimer() {
+    // Implemente a funcionalidade de configuração do temporizador conforme necessário
+    alert("Funcionalidade de configuração ainda não implementada!");
+  }
+
+  function playSound() {
+    var audio = document.getElementById("beepSound");
+    audio.play();
+  }
+
     var el = document.getElementById('graph'); // get canvas
     
     var options = {
