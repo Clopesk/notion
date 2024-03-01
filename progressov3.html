@@ -95,8 +95,8 @@
         var interval = setInterval(function() {
             timeLeft--;
             span.textContent = formatTime(timeLeft);
-            drawCircle('#000000', options.lineWidth, 1); // Background circle
-            drawCircle('#0000FF', options.lineWidth, timeLeft / options.time); // Progress circle
+            drawCircle('#0000FF', options.lineWidth, 1); // Background circle
+            drawCircle('#87CEFA', options.lineWidth, timeLeft / options.time); // Progress circle
             if (timeLeft <= 0) {
                 clearInterval(interval);
             }
