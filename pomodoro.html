@@ -320,7 +320,7 @@
       </div>
       
       <div class="preset-colors">
-        <div class="preset-color active" style="background: linear-gradient(135deg, #000000, #333333)" onclick="applyPreset('dark')"></div>
+        <div class="preset-color active" style="background: linear-gradient(135deg, #191919, #333333)" onclick="applyPreset('dark')"></div>
         <div class="preset-color" style="background: linear-gradient(135deg, #ffffff, #cccccc)" onclick="applyPreset('light')"></div>
         <div class="preset-color" style="background: linear-gradient(135deg, #1a1a2e, #16213e)" onclick="applyPreset('navy')"></div>
         <div class="preset-color" style="background: linear-gradient(135deg, #0f3460, #533483)" onclick="applyPreset('purple')"></div>
@@ -373,7 +373,7 @@
   let longBreakTime = 10;
   
   // Cores padrão
-  let bgColor = '#000000';
+  let bgColor = '#191919'; // Notion dark mode RGB(25,25,25)
   let textColor = '#ffffff';
   let buttonColor = '#ffffff';
   let timerColor = '#ffffff';
@@ -424,7 +424,7 @@
   function applyPreset(preset) {
     const presets = {
       dark: {
-        bgColor: '#000000',
+        bgColor: '#191919', // Notion dark mode RGB(25,25,25)
         textColor: '#ffffff',
         buttonColor: '#ffffff',
         timerColor: '#ffffff',
@@ -545,7 +545,7 @@
       pomodoroTime = 25;
       shortBreakTime = 5;
       longBreakTime = 10;
-      bgColor = '#000000';
+      bgColor = '#191919'; // Notion dark mode RGB(25,25,25)
       textColor = '#ffffff';
       buttonColor = '#ffffff';
       timerColor = '#ffffff';
