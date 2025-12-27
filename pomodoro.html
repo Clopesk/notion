@@ -342,6 +342,31 @@
   let running = false;
   let selectedOption = 25;
   
+  // Funções auxiliares para ambiente Notion
+  function isNotionEnvironment() {
+    return window.self !== window.top || navigator.userAgent.includes('Notion') || window.location.href.includes('notion');
+  }
+  
+  function safeLocalStorage(action, key, value) {
+    try {
+      if (typeof localStorage !== 'undefined' && localStorage) {
+        if (action === 'get') {
+          return localStorage.getItem(key);
+        } else if (action === 'set') {
+          localStorage.setItem(key, value);
+          return true;
+        } else if (action === 'remove') {
+          localStorage.removeItem(key);
+          return true;
+        }
+      }
+    } catch (e) {
+      console.log('localStorage não disponível:', e);
+      return action === 'get' ? null : false;
+    }
+    return action === 'get' ? null : false;
+  }
+  
   // Configurações padrão
   let pomodoroTime = 25;
   let shortBreakTime = 5;
@@ -356,17 +381,21 @@
   
   // Carregar configurações salvas
   function loadSettings() {
-    const saved = localStorage.getItem('pomodoroSettings');
+    const saved = safeLocalStorage('get', 'pomodoroSettings');
     if (saved) {
-      const settings = JSON.parse(saved);
-      pomodoroTime = settings.pomodoroTime || 25;
-      shortBreakTime = settings.shortBreakTime || 5;
-      longBreakTime = settings.longBreakTime || 10;
-      bgColor = settings.bgColor || '#000000';
-      textColor = settings.textColor || '#ffffff';
-      buttonColor = settings.buttonColor || '#ffffff';
-      timerColor = settings.timerColor || '#ffffff';
-      buttonHoverColor = settings.buttonHoverColor || '#555555';
+      try {
+        const settings = JSON.parse(saved);
+        pomodoroTime = settings.pomodoroTime || 25;
+        shortBreakTime = settings.shortBreakTime || 5;
+        longBreakTime = settings.longBreakTime || 10;
+        bgColor = settings.bgColor || '#000000';
+        textColor = settings.textColor || '#ffffff';
+        buttonColor = settings.buttonColor || '#ffffff';
+        timerColor = settings.timerColor || '#ffffff';
+        buttonHoverColor = settings.buttonHoverColor || '#555555';
+      } catch (e) {
+        console.log('Erro ao carregar configurações:', e);
+      }
       
       // Aplicar cores
       applyColors();
@@ -481,7 +510,7 @@
       buttonHoverColor
     };
     
-    localStorage.setItem('pomodoroSettings', JSON.stringify(settings));
+    safeLocalStorage('set', 'pomodoroSettings', JSON.stringify(settings));
     
     // Aplicar cores
     applyColors();
@@ -504,8 +533,13 @@
   
   // Reset configurações
   function resetSettings() {
-    if (confirm('Tem certeza que deseja resetar as configurações para os valores padrão?')) {
-      localStorage.removeItem('pomodoroSettings');
+    // Detectar se está no ambiente Notion
+    const isNotion = isNotionEnvironment();
+    
+    // Função para executar o reset
+    function executeReset() {
+      // Usar safeLocalStorage para remover configurações
+      safeLocalStorage('remove', 'pomodoroSettings');
       
       // Reset para valores padrão
       pomodoroTime = 25;
@@ -544,7 +578,33 @@
         }
       }
       
-      showNotification('Configurações resetadas para os valores padrão!');
+      // Notificação adaptada ao ambiente
+      if (isNotion) {
+        // No Notion, usar um método mais simples de notificação
+        const statusEl = document.querySelector('.status') || document.createElement('div');
+        if (!document.querySelector('.status')) {
+          statusEl.className = 'status';
+          statusEl.style.cssText = 'position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 1000;';
+          document.body.appendChild(statusEl);
+        }
+        statusEl.textContent = 'Configurações resetadas!';
+        statusEl.style.display = 'block';
+        setTimeout(() => {
+          statusEl.style.display = 'none';
+        }, 2000);
+      } else {
+        showNotification('Configurações resetadas para os valores padrão!');
+      }
+    }
+    
+    // No Notion, executar diretamente sem confirmação
+    if (isNotion) {
+      executeReset();
+    } else {
+      // Fora do Notion, usar confirmação normal
+      if (confirm('Tem certeza que deseja resetar as configurações para os valores padrão?')) {
+        executeReset();
+      }
     }
   }
   
