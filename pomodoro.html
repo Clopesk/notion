@@ -8,76 +8,604 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-color: black;
-    color: white;
+    background-color: var(--bg-color, black);
+    color: var(--text-color, white);
     text-align: center;
     padding-top: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
+  
   #timer {
     font-size: 48px;
+    color: var(--timer-color, white);
+    transition: color 0.3s ease;
   }
+  
  .button-container {
     margin-bottom: 20px;
   }
+  
   .icon-button {
     font-size: 24px;
     margin: 10px;
     padding: 15px;
     cursor: pointer;
     background-color: transparent;
-    color: white;
+    color: var(--button-color, white);
     border: none;
     outline: none;
-    opacity: 1; /* Opacidade padrão */
-    transition: opacity 0.3s ease; /* Transição suave para a opacidade */
+    opacity: 1;
+    transition: opacity 0.3s ease, color 0.3s ease;
   }
+  
   .icon-button:hover {
-    color: #555;
+    color: var(--button-hover-color, #555);
   }
+  
   .icon-button:disabled {
-    opacity: 0.5; /* Reduz a opacidade quando desabilitado */
-    color: #888; /* Cor do texto mais clara quando desabilitado */
-    cursor: not-allowed; /* Cursor de não permitido quando desabilitado */
+    opacity: 0.5;
+    color: #888;
+    cursor: not-allowed;
   }
 
+  /* Modal de Configurações */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .modal-content {
+    background-color: #1a1a1a;
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    width: 400px;
+    max-width: 90%;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .close:hover {
+    color: #ffffff;
+  }
+
+  .config-section {
+    margin-bottom: 25px;
+  }
+
+  .config-section h3 {
+    margin-bottom: 15px;
+    color: #cccccc;
+    font-size: 1.1rem;
+  }
+
+  .time-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .time-input-group {
+    flex: 1;
+    text-align: left;
+  }
+
+  .time-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #bbbbbb;
+  }
+
+  .time-input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .time-input-group input:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+  }
+
+  .color-section {
+    margin-bottom: 20px;
+  }
+
+  .color-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .color-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .color-input-group label {
+    font-size: 0.9rem;
+    color: #bbbbbb;
+    min-width: 80px;
+  }
+
+  .color-input-group input[type="color"] {
+    width: 50px;
+    height: 35px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: none;
+  }
+
+  .color-input-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .color-input-group input[type="color"]::-webkit-color-swatch {
+    border: 2px solid #444;
+    border-radius: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 25px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0051D5 0%, #0040AA 100%);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: #333333;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: #444444;
+  }
+
+  .preset-colors {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .preset-color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .preset-color:hover {
+    transform: scale(1.1);
+    border-color: #ffffff;
+  }
+
+  .preset-color.active {
+    border-color: #007AFF;
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
 <div class="button-container">
-  <button class="icon-button" onclick="setTime(25 * 60)">
-    <i class="fas fa-hourglass-start"></i> <!-- Ícone Font Awesome para Pomodoro -->
+  <button class="icon-button" onclick="setTime(pomodoroTime)" id="pomodoroBtn">
+    <i class="fas fa-hourglass-start"></i>
   </button>
-  <button class="icon-button" onclick="setTime(5 * 60)">
-    <i class="fas fa-mug-hot"></i> <!-- Ícone Font Awesome para Pausa Curta -->
+  <button class="icon-button" onclick="setTime(shortBreakTime)" id="shortBreakBtn">
+    <i class="fas fa-mug-hot"></i>
   </button>
-  <button class="icon-button" onclick="setTime(10 * 60)">
-    <i class="fas fa-bed"></i> <!-- Ícone Font Awesome para Pausa Longa -->
+  <button class="icon-button" onclick="setTime(longBreakTime)" id="longBreakBtn">
+    <i class="fas fa-bed"></i>
   </button>
 </div>
   
 <div id="timer">25:00</div>
  <br> 
 <button class="icon-button" id="startPauseBtn" onclick="startPauseTimer()">
-  <i class="fas fa-play"></i> <!-- Ícone Font Awesome para Start -->
+  <i class="fas fa-play"></i>
 </button>
 <button class="icon-button" id="resetBtn" onclick="resetTimer()" disabled>
-  <i class="fas fa-redo-alt"></i> <!-- Ícone Font Awesome para Inicial -->
+  <i class="fas fa-redo-alt"></i>
 </button>
-<button class="icon-button" id="configureBtn" onclick="configureTimer()">
-  <i class="fas fa-cog"></i> <!-- Ícone Font Awesome para Configurar -->
+<button class="icon-button" id="configureBtn" onclick="openModal()">
+  <i class="fas fa-cog"></i>
 </button>
+
+<!-- Modal de Configurações -->
+<div id="configModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Configurações</h2>
+      <span class="close" onclick="closeModal()">&times;</span>
+    </div>
+    
+    <div class="config-section">
+      <h3>⏱️ Tempos (minutos)</h3>
+      <div class="time-inputs">
+        <div class="time-input-group">
+          <label for="pomodoroTime">Pomodoro</label>
+          <input type="number" id="pomodoroTime" min="1" max="60" value="25">
+        </div>
+        <div class="time-input-group">
+          <label for="shortBreakTime">Pausa Curta</label>
+          <input type="number" id="shortBreakTime" min="1" max="30" value="5">
+        </div>
+        <div class="time-input-group">
+          <label for="longBreakTime">Pausa Longa</label>
+          <input type="number" id="longBreakTime" min="1" max="60" value="10">
+        </div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <h3>🎨 Cores</h3>
+      <div class="color-inputs">
+        <div class="color-input-group">
+          <label>Fundo</label>
+          <input type="color" id="bgColor" value="#000000">
+        </div>
+        <div class="color-input-group">
+          <label>Texto</label>
+          <input type="color" id="textColor" value="#ffffff">
+        </div>
+        <div class="color-input-group">
+          <label>Botões</label>
+          <input type="color" id="buttonColor" value="#ffffff">
+        </div>
+        <div class="color-input-group">
+          <label>Timer</label>
+          <input type="color" id="timerColor" value="#ffffff">
+        </div>
+      </div>
+      
+      <div class="preset-colors">
+        <div class="preset-color active" style="background: linear-gradient(135deg, #000000, #333333)" onclick="applyPreset('dark')"></div>
+        <div class="preset-color" style="background: linear-gradient(135deg, #ffffff, #cccccc)" onclick="applyPreset('light')"></div>
+        <div class="preset-color" style="background: linear-gradient(135deg, #1a1a2e, #16213e)" onclick="applyPreset('navy')"></div>
+        <div class="preset-color" style="background: linear-gradient(135deg, #0f3460, #533483)" onclick="applyPreset('purple')"></div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-secondary" onclick="resetSettings()">Reset</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <audio id="beepSound" src="birds.mp3"></audio>
 
 <script>
   let timerInterval;
-  let timeLeft = 1500; // 25 minutos em segundos
+  let timeLeft = 1500;
   let running = false;
-  let selectedOption = 25; // Opção padrão é 25 minutos
-  document.getElementById("resetBtn").disabled = false;
+  let selectedOption = 25;
   
-  function setTime(seconds) {
-    timeLeft = seconds;
-    selectedOption = seconds / 60; // Armazena a opção selecionada em minutos
+  // Configurações padrão
+  let pomodoroTime = 25;
+  let shortBreakTime = 5;
+  let longBreakTime = 10;
+  
+  // Cores padrão
+  let bgColor = '#000000';
+  let textColor = '#ffffff';
+  let buttonColor = '#ffffff';
+  let timerColor = '#ffffff';
+  let buttonHoverColor = '#555555';
+  
+  // Carregar configurações salvas
+  function loadSettings() {
+    const saved = localStorage.getItem('pomodoroSettings');
+    if (saved) {
+      const settings = JSON.parse(saved);
+      pomodoroTime = settings.pomodoroTime || 25;
+      shortBreakTime = settings.shortBreakTime || 5;
+      longBreakTime = settings.longBreakTime || 10;
+      bgColor = settings.bgColor || '#000000';
+      textColor = settings.textColor || '#ffffff';
+      buttonColor = settings.buttonColor || '#ffffff';
+      timerColor = settings.timerColor || '#ffffff';
+      buttonHoverColor = settings.buttonHoverColor || '#555555';
+      
+      // Aplicar cores
+      applyColors();
+      
+      // Atualizar inputs
+      document.getElementById('pomodoroTime').value = pomodoroTime;
+      document.getElementById('shortBreakTime').value = shortBreakTime;
+      document.getElementById('longBreakTime').value = longBreakTime;
+      document.getElementById('bgColor').value = bgColor;
+      document.getElementById('textColor').value = textColor;
+      document.getElementById('buttonColor').value = buttonColor;
+      document.getElementById('timerColor').value = timerColor;
+    }
+  }
+  
+  // Aplicar cores ao CSS
+  function applyColors() {
+    document.documentElement.style.setProperty('--bg-color', bgColor);
+    document.documentElement.style.setProperty('--text-color', textColor);
+    document.documentElement.style.setProperty('--button-color', buttonColor);
+    document.documentElement.style.setProperty('--timer-color', timerColor);
+    document.documentElement.style.setProperty('--button-hover-color', buttonHoverColor);
+  }
+  
+  // Presets de cores
+  function applyPreset(preset) {
+    const presets = {
+      dark: {
+        bgColor: '#000000',
+        textColor: '#ffffff',
+        buttonColor: '#ffffff',
+        timerColor: '#ffffff',
+        buttonHoverColor: '#555555'
+      },
+      light: {
+        bgColor: '#ffffff',
+        textColor: '#000000',
+        buttonColor: '#000000',
+        timerColor: '#000000',
+        buttonHoverColor: '#666666'
+      },
+      navy: {
+        bgColor: '#1a1a2e',
+        textColor: '#ffffff',
+        buttonColor: '#00d4ff',
+        timerColor: '#00d4ff',
+        buttonHoverColor: '#0099cc'
+      },
+      purple: {
+        bgColor: '#0f3460',
+        textColor: '#ffffff',
+        buttonColor: '#e94560',
+        timerColor: '#e94560',
+        buttonHoverColor: '#c13651'
+      }
+    };
+    
+    const colors = presets[preset];
+    if (colors) {
+      // Atualizar inputs
+      document.getElementById('bgColor').value = colors.bgColor;
+      document.getElementById('textColor').value = colors.textColor;
+      document.getElementById('buttonColor').value = colors.buttonColor;
+      document.getElementById('timerColor').value = colors.timerColor;
+      
+      // Atualizar variáveis
+      bgColor = colors.bgColor;
+      textColor = colors.textColor;
+      buttonColor = colors.buttonColor;
+      timerColor = colors.timerColor;
+      buttonHoverColor = colors.buttonHoverColor;
+      
+      // Aplicar cores
+      applyColors();
+      
+      // Atualizar estado dos presets
+      document.querySelectorAll('.preset-color').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  }
+  
+  // Funções do modal
+  function openModal() {
+    document.getElementById('configModal').style.display = 'block';
+  }
+  
+  function closeModal() {
+    document.getElementById('configModal').style.display = 'none';
+  }
+  
+  // Salvar configurações
+  function saveSettings() {
+    // Obter valores dos inputs
+    pomodoroTime = parseInt(document.getElementById('pomodoroTime').value);
+    shortBreakTime = parseInt(document.getElementById('shortBreakTime').value);
+    longBreakTime = parseInt(document.getElementById('longBreakTime').value);
+    
+    bgColor = document.getElementById('bgColor').value;
+    textColor = document.getElementById('textColor').value;
+    buttonColor = document.getElementById('buttonColor').value;
+    timerColor = document.getElementById('timerColor').value;
+    
+    // Salvar no localStorage
+    const settings = {
+      pomodoroTime,
+      shortBreakTime,
+      longBreakTime,
+      bgColor,
+      textColor,
+      buttonColor,
+      timerColor,
+      buttonHoverColor
+    };
+    
+    localStorage.setItem('pomodoroSettings', JSON.stringify(settings));
+    
+    // Aplicar cores
+    applyColors();
+    
+    // Atualizar botões com novos tempos
+    if (selectedOption === pomodoroTime) {
+      setTime(pomodoroTime);
+    } else if (selectedOption === shortBreakTime) {
+      setTime(shortBreakTime);
+    } else if (selectedOption === longBreakTime) {
+      setTime(longBreakTime);
+    }
+    
+    // Fechar modal
+    closeModal();
+    
+    // Mostrar mensagem de sucesso
+    showNotification('Configurações guardadas com sucesso!');
+  }
+  
+  // Reset configurações
+  function resetSettings() {
+    if (confirm('Tem certeza que deseja resetar as configurações para os valores padrão?')) {
+      localStorage.removeItem('pomodoroSettings');
+      
+      // Reset para valores padrão
+      pomodoroTime = 25;
+      shortBreakTime = 5;
+      longBreakTime = 10;
+      bgColor = '#000000';
+      textColor = '#ffffff';
+      buttonColor = '#ffffff';
+      timerColor = '#ffffff';
+      buttonHoverColor = '#555555';
+      
+      // Atualizar inputs
+      document.getElementById('pomodoroTime').value = pomodoroTime;
+      document.getElementById('shortBreakTime').value = shortBreakTime;
+      document.getElementById('longBreakTime').value = longBreakTime;
+      document.getElementById('bgColor').value = bgColor;
+      document.getElementById('textColor').value = textColor;
+      document.getElementById('buttonColor').value = buttonColor;
+      document.getElementById('timerColor').value = timerColor;
+      
+      // Aplicar cores
+      applyColors();
+      
+      // Reset presets
+      document.querySelectorAll('.preset-color').forEach(el => el.classList.remove('active'));
+      document.querySelector('.preset-color').classList.add('active');
+      
+      showNotification('Configurações resetadas para os valores padrão!');
+    }
+  }
+  
+  // Notificação simples
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      z-index: 10000;
+      box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+      animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 300);
+    }, 3000);
+  }
+  
+  // Fechar modal ao clicar fora
+  window.onclick = function(event) {
+    const modal = document.getElementById('configModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  }
+  
+  // Adicionar animações CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Carregar configurações ao iniciar
+  loadSettings();
+  
+  // Funções existentes do temporizador
+  function setTime(minutes) {
+    timeLeft = minutes * 60;
+    selectedOption = minutes;
     updateDisplay();
   }
 
@@ -85,20 +613,20 @@
     running = !running;
     if (running) {
       timerInterval = setInterval(updateTimer, 1000);
-      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Altera o ícone para Pausa
-      document.getElementById("resetBtn").disabled = true; // Desabilita o botão de reset enquanto o temporizador estiver em execução
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-pause"></i>';
+      document.getElementById("resetBtn").disabled = true;
     } else {
       clearInterval(timerInterval);
-      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
-      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador for pausado
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>';
+      document.getElementById("resetBtn").disabled = false;
     }
   }
 
   function resetTimer() {
     if (!running) {
-      timeLeft = selectedOption * 60; // Define o tempo restante com base na opção selecionada
+      timeLeft = selectedOption * 60;
       updateDisplay();
-      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>';
     }
   }
 
@@ -108,9 +636,9 @@
       updateDisplay();
     } else {
       clearInterval(timerInterval);
-      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>'; // Altera o ícone para Play
+      document.getElementById("startPauseBtn").innerHTML = '<i class="fas fa-play"></i>';
       playSound();
-      document.getElementById("resetBtn").disabled = false; // Habilita o botão de reset quando o temporizador chegar a zero
+      document.getElementById("resetBtn").disabled = false;
     }
   }
 
@@ -121,15 +649,14 @@
     document.getElementById("timer").textContent = displayTime;
   }
 
-  function configureTimer() {
-    // Implemente a funcionalidade de configuração do temporizador conforme necessário
-    alert("Funcionalidade de configuração ainda não implementada!");
-  }
-
   function playSound() {
     var audio = document.getElementById("beepSound");
     audio.play();
   }
+  
+  // Inicializar display
+  updateDisplay();
+  document.getElementById("resetBtn").disabled = false;
 </script>
 </body>
 </html>
