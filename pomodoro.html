@@ -673,6 +673,9 @@
   // Carregar configurações ao iniciar
   loadSettings();
   
+  // Aplicar cores imediatamente (garante que a cor padrão seja aplicada)
+  applyColors();
+  
   // Funções existentes do temporizador
   function setTime(minutes) {
     timeLeft = minutes * 60;
