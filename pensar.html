@@ -31,10 +31,35 @@
       
       
     }
+
+    #nextThoughtBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-family: Arial, sans-serif;
+      text-transform: lowercase;
+      z-index: 1000;
+    }
+
+    #nextThoughtBtn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
   <div id="thoughtBox"></div>
+  <button id="nextThoughtBtn" onclick="updateThought()">outro pensamento...</button>
 
   <script>
     const thoughts = [
