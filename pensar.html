@@ -107,6 +107,36 @@
       "&ldquo;A criatividade transforma limites em possibilidades.&rdquo;<br><br>&loz; Maya Angelou",
       "&ldquo;Liderar é dar clareza em tempos de incerteza.&rdquo;<br><br>&loz; Simon Sinek",
       "&ldquo;A vida ganha sentido quando é vivida com intenção.&rdquo;<br><br>&loz; Seneca",
+      "&ldquo;Tudo vale a pena quando a alma não é pequena.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Tenho em mim todos os sonhos do mundo.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Para viajar basta existir.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;O valor das coisas não está no tempo que duram, mas na intensidade com que acontecem.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Pensar é estar doente dos olhos.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;A minha pátria é a língua portuguesa.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Ser poeta não é uma ambição, é uma maneira de estar sozinho.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Sentir é criar.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Viver é ser outro.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;Nada somos, que nos não seja dado.&rdquo;<br><br>&loz; Fernando Pessoa",
+      "&ldquo;O essencial é invisível aos olhos.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;Só se vê bem com o coração.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;És eternamente responsável por aquilo que cativas.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;A perfeição é atingida não quando não há mais nada a acrescentar, mas quando não há mais nada a retirar.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;Caminhar juntos é mais importante do que chegar depressa.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;Amar não é olhar um para o outro, é olhar juntos na mesma direcção.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;A vida cria a ordem, mas a ordem não cria a vida.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;É o tempo que perdeste com a tua rosa que a tornou tão importante.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;O verdadeiro milagre não é voar pelo ar ou andar sobre a água, mas caminhar sobre a terra.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;A grandeza de uma profissão está em unir os homens.&rdquo;<br><br>&loz; Antoine de Saint-Exupéry",
+      "&ldquo;Não se pode ensinar nada a um homem; apenas ajudá-lo a descobrir por si mesmo.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;A matemática é a linguagem com que Deus escreveu o universo.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;Medir o que é mensurável e tornar mensurável o que não o é.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;Em questões de ciência, a autoridade de mil não vale o humilde raciocínio de um só.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;A curiosidade é a mãe do conhecimento.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;A verdade é filha do tempo, não da autoridade.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;Todas as verdades passam por três fases: ridículo, oposição violenta e aceitação.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;A natureza não quebra as suas próprias leis.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;O universo está escrito em linguagem matemática.&rdquo;<br><br>&loz; Galileu Galilei",
+      "&ldquo;Questionar é o primeiro passo para compreender.&rdquo;<br><br>&loz; Galileu Galilei",
 
 
       
@@ -114,8 +144,34 @@
       
     ];
 
+    // Array para guardar os últimos 5 pensamentos mostrados
+    let lastThoughts = [];
+
     function getRandomThought() {
-      return thoughts[Math.floor(Math.random() * thoughts.length)];
+      let availableThoughts = thoughts.filter((thought, index) => {
+        return !lastThoughts.includes(index);
+      });
+
+      // Se não houver pensamentos disponíveis (todos foram mostrados recentemente),
+      // limpa o histórico e usa todos os pensamentos
+      if (availableThoughts.length === 0) {
+        lastThoughts = [];
+        availableThoughts = thoughts;
+      }
+
+      const randomIndex = Math.floor(Math.random() * availableThoughts.length);
+      const selectedThought = availableThoughts[randomIndex];
+      const selectedIndex = thoughts.indexOf(selectedThought);
+
+      // Adiciona o índice do pensamento selecionado ao histórico
+      lastThoughts.push(selectedIndex);
+
+      // Mantém apenas os últimos 5 pensamentos no histórico
+      if (lastThoughts.length > 5) {
+        lastThoughts.shift();
+      }
+
+      return selectedThought;
     }
 
     function updateThought() {
