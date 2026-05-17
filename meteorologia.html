@@ -8,47 +8,61 @@
     margin: 0;
     padding: 0;
     background: #121212;
-    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
   }
 
-  /* altura fixa funciona melhor no Notion */
-  .wrapper {
-    height: 650px; /* AJUSTA ESTE VALOR */
+  .card {
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-radius: 16px;
     width: 100%;
-    background: #121212;
+    max-width: 420px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .city {
+    font-size: 18px;
+    opacity: 0.7;
+  }
+
+  .temp {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .details {
     display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .weatherwidget-io {
-    width: 100%;
+    justify-content: space-between;
+    opacity: 0.8;
+    font-size: 14px;
   }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <a class="weatherwidget-io"
-     href="https://forecast7.com/pt/38d72n9d14/lisbon/"
-     data-label_1="LISBOA"
-     data-label_2="METEOROLOGIA"
-     data-theme="dark">
-     LISBOA METEOROLOGIA
-  </a>
+<div class="card">
+  <div class="city">Lisboa</div>
+  <div class="temp" id="temp">--°</div>
+  <div class="details">
+    <div>Vento: <span id="wind">--</span> km/h</div>
+    <div>Humidade: <span id="humidity">--</span>%</div>
+  </div>
 </div>
 
 <script>
-!function(d,s,id){
-  var js,fjs=d.getElementsByTagName(s)[0];
-  if(!d.getElementById(id)){
-    js=d.createElement(s);
-    js.id=id;
-    js.src='https://weatherwidget.io/js/widget.min.js';
-    fjs.parentNode.insertBefore(js,fjs);
-  }
-}(document,'script','weatherwidget-io-js');
+fetch("https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&current_weather=true")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("temp").textContent = Math.round(data.current_weather.temperature) + "°";
+    document.getElementById("wind").textContent = data.current_weather.windspeed;
+    
+    // Open-Meteo não dá humidade no endpoint simples → valor fake ou remove
+    document.getElementById("humidity").textContent = "--";
+  });
 </script>
 
 </body>
