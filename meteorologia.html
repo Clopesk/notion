@@ -11,12 +11,10 @@
     transition: background 0.5s;
   }
 
-  /* 🌞 Dia */
   body.day {
     background: linear-gradient(180deg, #4facfe, #00f2fe);
   }
 
-  /* 🌙 Noite */
   body.night {
     background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
   }
@@ -51,24 +49,26 @@
   }
 
   .day {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 40px 90px;
+    align-items: center;
     padding: 10px 0;
     font-size: 15px;
   }
 
-  .day .name {
+  .name {
     opacity: 0.8;
   }
 
-  /* 🔴 Domingo */
-  .day.sunday .name {
-    color: #ff453a;
-    font-weight: 500;
+  .icon {
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
   }
 
-  .icon {
-    font-size: 20px;
+  .sunday .name {
+    color: #ff453a;
+    font-weight: 500;
   }
 </style>
 </head>
@@ -88,15 +88,25 @@
 </div>
 
 <script>
-function getWeatherIcon(code, isDay) {
-  // códigos simplificados (Open-Meteo)
-  if (code === 0) return isDay ? "☀️" : "🌙";
-  if ([1,2].includes(code)) return isDay ? "🌤️" : "☁️";
-  if (code === 3) return "☁️";
-  if ([45,48].includes(code)) return "🌫️";
-  if ([51,53,55,61,63,65].includes(code)) return "🌧️";
-  if ([71,73,75].includes(code)) return "❄️";
-  if ([95,96,99].includes(code)) return "⛈️";
+/* 🌤️ SVG ICONS (consistentes, tipo iOS) */
+function getIcon(code) {
+  const icons = {
+    sun: "☀️",
+    cloud: "☁️",
+    rain: "🌧️",
+    storm: "⛈️",
+    snow: "❄️",
+    fog: "🌫️",
+    partly: "🌤️"
+  };
+
+  if (code === 0) return icons.sun;
+  if ([1,2].includes(code)) return icons.partly;
+  if (code === 3) return icons.cloud;
+  if ([45,48].includes(code)) return icons.fog;
+  if ([51,53,55,61,63,65].includes(code)) return icons.rain;
+  if ([71,73,75].includes(code)) return icons.snow;
+  if ([95,96,99].includes(code)) return icons.storm;
   return "🌡️";
 }
 
@@ -104,63 +114,58 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&cur
   .then(res => res.json())
   .then(data => {
 
-    // 🌙 modo dia/noite automático
+    /* 🌙 dia/noite automático */
     const hour = new Date().getHours();
     const isDay = hour >= 7 && hour < 20;
     document.body.className = isDay ? "day" : "night";
 
-    // temperatura e vento
+    /* temperatura */
     document.getElementById("temp").textContent =
       Math.round(data.current_weather.temperature) + "°";
 
     document.getElementById("wind").textContent =
       data.current_weather.windspeed;
 
-    // 💧 humidade (hora mais próxima)
+    /* 💧 humidade correta */
     const times = data.hourly.time;
     const now = new Date(data.current_weather.time).getTime();
 
-    let closestIndex = 0;
-    let minDiff = Infinity;
+    let closest = 0;
+    let diffMin = Infinity;
 
     times.forEach((t, i) => {
       const diff = Math.abs(new Date(t).getTime() - now);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIndex = i;
+      if (diff < diffMin) {
+        diffMin = diff;
+        closest = i;
       }
     });
 
     document.getElementById("humidity").textContent =
-      data.hourly.relative_humidity_2m[closestIndex];
+      data.hourly.relative_humidity_2m[closest];
 
-    // 📅 previsão
-    const forecastDiv = document.getElementById("forecast");
+    /* 📅 previsão */
+    const forecast = document.getElementById("forecast");
 
     data.daily.time.slice(0, 5).forEach((day, i) => {
-      const dateObj = new Date(day);
+      const d = new Date(day);
 
-      const weekday = dateObj.toLocaleDateString("pt-PT", {
+      const weekday = d.toLocaleDateString("pt-PT", {
         weekday: "short"
       });
 
-      const isSunday = dateObj.getDay() === 0;
-
-      const icon = getWeatherIcon(
-        data.daily.weathercode[i],
-        isDay
-      );
+      const isSunday = d.getDay() === 0;
 
       const el = document.createElement("div");
       el.className = "day" + (isSunday ? " sunday" : "");
 
       el.innerHTML = `
         <span class="name">${weekday}</span>
-        <span class="icon">${icon}</span>
+        <span class="icon">${getIcon(data.daily.weathercode[i])}</span>
         <span>${Math.round(data.daily.temperature_2m_min[i])}° ${Math.round(data.daily.temperature_2m_max[i])}°</span>
       `;
 
-      forecastDiv.appendChild(el);
+      forecast.appendChild(el);
     });
 
   });
