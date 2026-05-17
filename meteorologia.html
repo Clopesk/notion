@@ -6,9 +6,19 @@
 <style>
   body {
     margin: 0;
-    background: linear-gradient(180deg, #1c1c1e, #2c2c2e);
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     color: white;
+    transition: background 0.5s;
+  }
+
+  /* 🌞 Dia */
+  body.day {
+    background: linear-gradient(180deg, #4facfe, #00f2fe);
+  }
+
+  /* 🌙 Noite */
+  body.night {
+    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
   }
 
   .card {
@@ -19,7 +29,7 @@
 
   .city {
     font-size: 18px;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .temp {
@@ -32,12 +42,12 @@
     display: flex;
     gap: 15px;
     font-size: 14px;
-    opacity: 0.85;
+    opacity: 0.9;
   }
 
   .forecast {
     margin-top: 25px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255,255,255,0.2);
   }
 
   .day {
@@ -47,8 +57,18 @@
     font-size: 15px;
   }
 
-  .day span:first-child {
-    opacity: 0.7;
+  .day .name {
+    opacity: 0.8;
+  }
+
+  /* 🔴 Domingo */
+  .day.sunday .name {
+    color: #ff453a;
+    font-weight: 500;
+  }
+
+  .icon {
+    font-size: 20px;
   }
 </style>
 </head>
@@ -68,18 +88,35 @@
 </div>
 
 <script>
-fetch("https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&current_weather=true&hourly=relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto")
+function getWeatherIcon(code, isDay) {
+  // códigos simplificados (Open-Meteo)
+  if (code === 0) return isDay ? "☀️" : "🌙";
+  if ([1,2].includes(code)) return isDay ? "🌤️" : "☁️";
+  if (code === 3) return "☁️";
+  if ([45,48].includes(code)) return "🌫️";
+  if ([51,53,55,61,63,65].includes(code)) return "🌧️";
+  if ([71,73,75].includes(code)) return "❄️";
+  if ([95,96,99].includes(code)) return "⛈️";
+  return "🌡️";
+}
+
+fetch("https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&current_weather=true&hourly=relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto")
   .then(res => res.json())
   .then(data => {
 
-    // Temperatura e vento
+    // 🌙 modo dia/noite automático
+    const hour = new Date().getHours();
+    const isDay = hour >= 7 && hour < 20;
+    document.body.className = isDay ? "day" : "night";
+
+    // temperatura e vento
     document.getElementById("temp").textContent =
       Math.round(data.current_weather.temperature) + "°";
 
     document.getElementById("wind").textContent =
       data.current_weather.windspeed;
 
-    // 🔥 HUMIDADE (corrigido com hora mais próxima)
+    // 💧 humidade (hora mais próxima)
     const times = data.hourly.time;
     const now = new Date(data.current_weather.time).getTime();
 
@@ -97,20 +134,30 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&cur
     document.getElementById("humidity").textContent =
       data.hourly.relative_humidity_2m[closestIndex];
 
-    // Previsão
+    // 📅 previsão
     const forecastDiv = document.getElementById("forecast");
 
     data.daily.time.slice(0, 5).forEach((day, i) => {
-      const el = document.createElement("div");
-      el.className = "day";
+      const dateObj = new Date(day);
 
-      const date = new Date(day).toLocaleDateString("pt-PT", {
+      const weekday = dateObj.toLocaleDateString("pt-PT", {
         weekday: "short"
       });
 
+      const isSunday = dateObj.getDay() === 0;
+
+      const icon = getWeatherIcon(
+        data.daily.weathercode[i],
+        isDay
+      );
+
+      const el = document.createElement("div");
+      el.className = "day" + (isSunday ? " sunday" : "");
+
       el.innerHTML = `
-        <span>${date}</span>
-        <span>${Math.round(data.daily.temperature_2m_min[i])}°  ${Math.round(data.daily.temperature_2m_max[i])}°</span>
+        <span class="name">${weekday}</span>
+        <span class="icon">${icon}</span>
+        <span>${Math.round(data.daily.temperature_2m_min[i])}° ${Math.round(data.daily.temperature_2m_max[i])}°</span>
       `;
 
       forecastDiv.appendChild(el);
