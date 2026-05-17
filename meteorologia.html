@@ -2,14 +2,20 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Widget Meteo</title>
+  <title>Meteorologia Lisboa</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #121212; /* fundo escuro */
       height: 100%;
+      width: 100%;
+      background: #121212;
+      overflow: hidden; /* remove scroll */
     }
 
     body {
@@ -19,8 +25,8 @@
     }
 
     .weatherwidget-io {
-      width: 100%;
-      max-width: 600px; /* opcional */
+      width: 100vw;   /* largura total do ecrã */
+      height: 100vh;  /* altura total do ecrã */
     }
   </style>
 </head>
@@ -30,7 +36,9 @@
      href="https://forecast7.com/pt/38d72n9d14/lisbon/"
      data-label_1="LISBOA"
      data-label_2="METEOROLOGIA"
-     data-theme="dark">
+     data-theme="dark"
+     data-mode="Current"
+     data-days="3">
      LISBOA METEOROLOGIA
   </a>
 
