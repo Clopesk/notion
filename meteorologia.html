@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Meteorologia Lisboa</title>
+<meta charset="UTF-8">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    overflow: hidden;
+  }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background: #121212;
-      overflow: hidden; /* remove scroll */
-    }
+  /* altura fixa funciona melhor no Notion */
+  .wrapper {
+    height: 500px; /* AJUSTA ESTE VALOR */
+    width: 100%;
+    background: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .weatherwidget-io {
-      width: 100vw;   /* largura total do ecrã */
-      height: 100vh;  /* altura total do ecrã */
-    }
-  </style>
+  .weatherwidget-io {
+    width: 100%;
+  }
+</style>
 </head>
+
 <body>
 
+<div class="wrapper">
   <a class="weatherwidget-io"
      href="https://forecast7.com/pt/38d72n9d14/lisbon/"
      data-label_1="LISBOA"
      data-label_2="METEOROLOGIA"
-     data-theme="dark"
-     data-mode="Current"
-     data-days="3">
+     data-theme="dark">
      LISBOA METEOROLOGIA
   </a>
+</div>
 
-  <script>
-  !function(d,s,id){
-    var js,fjs=d.getElementsByTagName(s)[0];
-    if(!d.getElementById(id)){
-      js=d.createElement(s);
-      js.id=id;
-      js.src='https://weatherwidget.io/js/widget.min.js';
-      fjs.parentNode.insertBefore(js,fjs);
-    }
-  }(document,'script','weatherwidget-io-js');
-  </script>
+<script>
+!function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0];
+  if(!d.getElementById(id)){
+    js=d.createElement(s);
+    js.id=id;
+    js.src='https://weatherwidget.io/js/widget.min.js';
+    fjs.parentNode.insertBefore(js,fjs);
+  }
+}(document,'script','weatherwidget-io-js');
+</script>
 
 </body>
 </html>
